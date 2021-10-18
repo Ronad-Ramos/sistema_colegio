@@ -47,13 +47,17 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 
 				move_uploaded_file($tmp_dir,$upload_dir.$img);
 
-				$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `CODIGO`, `TIPO`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`, `FOTO_PERFIL`) VALUES (NULL,?,?,?,?,?,?,?,NOW(),?,?)");
-			    $resultado = $sentencia->execute([$codigo,"1",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$_POST['nacimiento'],$img]); 
+				$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`, `FOTO_PERFIL`) VALUES (NULL,?,?,?,?,?,?,NOW(),?,?)");
+			    $resultado = $sentencia->execute(["2",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$_POST['nacimiento'],$img]); 
 
 			    $message = 'Cargado correctamente'; $valor = '1';
 
 			}else{ $message = 'Solo se permiten jpg - png - jpeg.'; $valor = '0'; }
-		}else{ $message = 'No ah selecionado una imagen'; $valor = '0'; }
+		}else{ 
+			$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `CODIGO`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`) VALUES (NULL,?,?,?,?,?,?,?,NOW(),?)");
+			$resultado = $sentencia->execute([$codigo,"2",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$_POST['nacimiento']]); 
+			$message = 'Cargado correctamente - sin foto de perfil'; $valor = '1';
+		}
 
           				}else{ $message = 'Inserte su fecha de nacimiento!'; $valor = '0';}
           			}else{ $message = 'Inserte su contraseña!'; $valor = '0';}
@@ -67,22 +71,30 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 
 	if($_POST['tipo'] == "m"){
 
-		$detallesUs = $conexion->prepare("SELECT * FROM usuarios WHERE TIPO = 1");
+		$detallesUs = $conexion->prepare("SELECT * FROM usuarios WHERE ROL !=1  ORDER BY ID DESC");
         $detallesUs->execute();
         $userE = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
 		$valor = '';
 		foreach($userE as $usuario){
 		
 		$valor .='<tr>';
-		$valor .='	<th scope="row">1</th>';
+		$valor .='	<th scope="row">'.$usuario['ID'].'</th>';
 		$valor .='	<td >';
+		if($usuario['FOTO_PERFIL']!=""){
 		$valor .='		<img src="../perfil/src=img/'.$usuario['FOTO_PERFIL'].'" width="30" height="30" class="bg-light rounded-circle me-2" alt="Avatar">';
+		}else{
+		$valor .='		<img src="../perfil/src=img/perfil.gif" width="30" height="30" class="bg-light rounded-circle me-2" alt="Avatar">';
+		}
 		$valor .='	</td>';
-		$valor .='	<td class="text-fade">'.$usuario['NOMBRES'].'</td>';
-		$valor .='	<td class="text-fade">'.$usuario['APELLIDOS'].'</td>';
-		$valor .='	<td class="text-fade">'.$usuario['USUARIO'].'</td>';
-		$valor .='	<td class="text-fade">*******</td>';
-		$valor .='	<td class="text-fade">'.$usuario['CORREO'].'</td>';
+		$valor .='	<td>'.$usuario['NOMBRES'].'</td>';
+		$valor .='	<td>'.$usuario['APELLIDOS'].'</td>';
+		$valor .='	<td>'.$usuario['USUARIO'].'</td>';
+		$valor .='	<td>'.$usuario['CORREO'].'</td>';
+		if($usuario['GENERO'] == 1){
+		$valor .='	<td>Masculino</td>';
+		}else{
+		$valor .='	<td>Femenino</td>';
+		}
 		$valor .='	<td class="table-action">';
 		$valor .='		<button id="btnEditar'.$usuario['ID'].'" type="button" onclick="editarUser('.$usuario['ID'].');" class="waves-effect waves-circle btn btn-circle btn-success mb-5"><i class="mdi mdi-lead-pencil"></i></button>';
 		$valor .='		<button id="btnEliminar'.$usuario['ID'].'" type="button" onclick="eliminarUser('.$usuario['ID'].');" class="waves-effect waves-circle btn btn-circle btn-danger mb-5"><i class="mdi mdi-close-circle"></i></button>';

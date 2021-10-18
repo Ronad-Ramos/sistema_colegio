@@ -53,7 +53,7 @@
 											<div class="col-12">
 												<div class="card">
 													<div class="card-header">
-														<h5 class="card-title">Información de usuarios</h5>
+														<h5 class="card-title">Información de alumno</h5>
 														<p class="mb-0 card-subtitle text-muted"> <button type="button" class="waves-effect waves-circle btn btn-circle btn-warning  mb-5" data-bs-toggle="modal" data-bs-target="#registrar"><i class="mdi mdi-plus"></i></button></p>
 													</div>						
 													<div class="card-body">
@@ -66,8 +66,11 @@
 																		<th scope="col">Nombres</th>
 																		<th scope="col">Apellidos</th>
 																		<th scope="col">Usuario</th>
-																		<th scope="col">Contraseña</th>
 																		<th scope="col">Correo</th>
+																		<th scope="col">Genero</th>
+																		<th scope="col">Nivel</th>
+																		<th scope="col">Grado</th>
+																		<th scope="col">Seccion</th>
 																		<th scope="col">Opciones</th>
 																	</tr>
 																</thead>
@@ -87,7 +90,7 @@
 							<div class="modal-body">
 								<div class="text-center mt-2 mb-4">
 									<a class="text-success">
-										<span>Registrar nuevo usuario</span>
+										<span>Registrar nuevo Alumno</span>
 									</a>
 								</div>
 												<div class="mb-3">
@@ -115,6 +118,82 @@
 													</div>
 												</div>
 
+
+												<form name="f1" id="f1">
+													<div class="mb-3">
+														<label class="form-label">Selecionar Nivel-Grado-Seccion</label>
+												    <select class="form-select" name="nivel" onchange="cambia_provincia()"> 
+													    <option value="0" selected>Seleccione Nivel 
+													    <option value="1">Primaria 
+													    <option value="2">Secundaria
+												    </select>
+											    </div>
+											    <div class="mb-3">
+												    <select class="form-select" name=grado> 
+												    	<option value="-">- 
+												    </select> 
+												  </div>
+												  <div class="mb-3">
+												    <select class="form-select" name=seccion> 
+												    	<option value="-" selected>Seleccione Seccion 
+												    	<option value="A">A</option>
+												    	<option value="B">B</option>
+												    	<option value="C">C</option>
+												    	<option value="D">D</option>
+												    	<option value="E">E</option>
+												    </select> 
+												  </div>
+												  <div class="mb-3">
+														<label class="form-label">Genero</label>
+													    <select class="form-select" name=genero> 
+													    	<option value="1">Masculino</option>
+													    	<option value="2">Femenino</option>
+													    </select> 
+													 </div>
+											  </form>
+
+<script type="text/javascript">
+	var nivel_prim=new Array("Selecione grado","1","2","3","4","5","6");
+  var nivel_secu=new Array("Selecione grado","1","2","3","4","5");
+  var sesiones=new Array("Selecione seccion","A","B","C","D","E","F","G","H");
+
+  var todos_nivel = [
+    [],
+    nivel_prim,
+    nivel_secu,
+    sesiones,
+  ];
+
+  function cambia_provincia(){ 
+   	//tomo el valor del select del nivel elegido 
+   	var nivel 
+   	nivel = document.f1.nivel[document.f1.nivel.selectedIndex].value 
+   	//miro a ver si el nivel está definido 
+   	if (nivel != 0) { 
+      	//si estaba definido, entonces coloco las opciones de la grado correspondiente. 
+      	//selecciono el array de grado adecuado 
+      	mis_grados=todos_nivel[nivel]
+      	//calculo el numero de grados 
+      	num_grados = mis_grados.length 
+      	//marco el número de grados en el select 
+      	document.f1.grado.length = num_grados 
+      	//para cada grado del array, la introduzco en el select 
+      	for(i=0;i<num_grados;i++){ 
+         	document.f1.grado.options[i].value=mis_grados[i] 
+         	document.f1.grado.options[i].text=mis_grados[i]
+      	}	
+   	}else{ 
+      	//si no había grado seleccionada, elimino las grados del select 
+      	document.f1.grado.length = 1 
+      	//coloco un guión en la única opción que he dejado 
+      	document.f1.grado.options[0].value = "-" 
+      	document.f1.grado.options[0].text = "-" 
+   	} console.log(nivel);
+   	//marco como seleccionada la opción primera de grado 
+   	document.f1.grado.options[0].selected = true 
+}
+</script>
+
 												<div class="mb-3">
 													<label for="example-date" class="form-label">Fecha de nacimiento</label>
 													<input type="date" id="fechaUsuario" value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>" class="form-control">
@@ -127,11 +206,16 @@
 												</div>
 
 									<div class="mb-3 text-center">
-										<button class="btn btn-primary" type="submit" id="btnRegistrar" onclick="registrarUser();" >Registrar</button>
+										<button class="btn btn-primary" type="submit" onclick="registrarUser();" >Registrarr</button>
 									</div>
 									<p id="msm" ></p>
-								
-							</div>
+<script type="text/javascript">
+
+function lo(){
+    var dataString = $('#f1').serialize();
+    alert('Datos serializados: '+dataString);
+} 
+</script>							</div>
 						</div><!-- /.modal-content -->
 					</div><!-- /.modal-dialog -->
 				</div><!-- /.modal -->
@@ -201,204 +285,17 @@
 	  </div>
   </div>
   <!-- /.content-wrapper -->
-  
-   <footer class="main-footer">
-    <div class="pull-right d-none d-sm-inline-block">
-        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-		  <li class="nav-item">
-			<a class="nav-link" href="../doc/" target="_blank">Documentación</a>
-		  </li>
-		</ul>
-    </div>
-	  &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://virgen_de_guadalupe.com">Virgen de Guadalupe</a>. Todos los derechos reservados.
-  </footer>
-  <!-- Side panel -->
-
-  <!-- quick_user_toggle -->
-  <div class="modal modal-right fade" id="quick_user_toggle" tabindex="-1">
-	  <div class="modal-dialog">
-		<div class="modal-content slim-scroll3">
-		  <div class="modal-body p-30 bg-white">
-			<div class="d-flex align-items-center justify-content-between pb-30">
-				<h4 class="m-0">User Profile
-				<small class="text-fade fs-12 ms-5">12 messages</small></h4>
-				<a href="#" class="btn btn-icon btn-danger-light btn-sm no-shadow" data-bs-dismiss="modal">
-					<span class="fa fa-close"></span>
-				</a>
-			</div>
-            	<div>
-                <div class="d-flex flex-row">
-                    <div class=""><img src="../assets/images/avatar/avatar-13.png" alt="user" class="rounded bg-danger-light w-150" width="100"></div>
-                    <div class="ps-20">
-                        <h5 class="mb-0">Nil Yeager</h5>
-                        <p class="my-5 text-fade">Manager</p>
-                        <a href="mailto:dummy@gmail.com"><span class="icon-Mail-notification me-5 text-success"><span class="path1"></span><span class="path2"></span></span> dummy@gmail.com</a>
-                        <button class="btn btn-success-light btn-sm mt-5"><i class="ti-plus"></i> Follow</button>
-                    </div>
-                </div>
-							</div>
-              <div class="dropdown-divider my-30"></div>
-              <div>
-                <div class="d-flex align-items-center mb-30">
-                    <div class="me-15 bg-primary-light h-50 w-50 l-h-60 rounded text-center">
-                          <span class="icon-Library fs-24"><span class="path1"></span><span class="path2"></span></span>
-                    </div>
-                    <div class="d-flex flex-column fw-500">
-                        <a href="extra_profile.html" class="text-dark hover-primary mb-1 fs-16">My Profile</a>
-                        <span class="text-fade">Account settings and more</span>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center mb-30">
-                    <div class="me-15 bg-danger-light h-50 w-50 l-h-60 rounded text-center">
-                        <span class="icon-Write fs-24"><span class="path1"></span><span class="path2"></span></span>
-                    </div>
-                    <div class="d-flex flex-column fw-500">
-                        <a href="mailbox.html" class="text-dark hover-danger mb-1 fs-16">My Messages</a>
-                        <span class="text-fade">Inbox and tasks</span>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center mb-30">
-                    <div class="me-15 bg-success-light h-50 w-50 l-h-60 rounded text-center">
-                        <span class="icon-Group-chat fs-24"><span class="path1"></span><span class="path2"></span></span>
-                    </div>
-                    <div class="d-flex flex-column fw-500">
-                        <a href="setting.html" class="text-dark hover-success mb-1 fs-16">Settings</a>
-                        <span class="text-fade">Accout Settings</span>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center mb-30">
-                    <div class="me-15 bg-info-light h-50 w-50 l-h-60 rounded text-center">
-                        <span class="icon-Attachment1 fs-24"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
-                    </div>
-                    <div class="d-flex flex-column fw-500">
-                        <a href="extra_taskboard.html" class="text-dark hover-info mb-1 fs-16">Project</a>
-                        <span class="text-fade">latest tasks and projects</span>
-                    </div>
-                </div>
-              </div>
-              <div class="dropdown-divider my-30"></div>
-              <div>
-                <div class="media-list">
-                    <a class="media media-single px-0" href="#">
-                      <h4 class="w-50 text-gray fw-500">10:10</h4>
-                      <div class="media-body ps-15 bs-5 rounded border-primary">
-                        <p>Morbi quis ex eu arcu auctor sagittis.</p>
-                        <span class="text-fade">by Johne</span>
-                      </div>
-                    </a>
-
-                    <a class="media media-single px-0" href="#">
-                      <h4 class="w-50 text-gray fw-500">08:40</h4>
-                      <div class="media-body ps-15 bs-5 rounded border-success">
-                        <p>Proin iaculis eros non odio ornare efficitur.</p>
-                        <span class="text-fade">by Amla</span>
-                      </div>
-                    </a>
-
-                  </div>
-            </div>
-		  </div>
-		</div>
-	  </div>
-  </div>
-  <!-- /quick_user_toggle --> 
-
-  
-  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>	
+	<?php include 'controles/vista=footer.php'; ?>
+	<?php include 'controles/vista=post_footer.php'; ?>	
 	 </div>
 <!-- ./wrapper -->
-	
-	
-	<div id="chat-box-body">
-		<div id="chat-circle" class="waves-effect waves-circle btn btn-circle btn-sm btn-warning l-h-50">
-            <div id="chat-overlay"></div>
-            <span class="icon-Group-chat fs-18"><span class="path1"></span><span class="path2"></span></span>
-		</div>
 
-		<div class="chat-box">
-            <div class="chat-box-header p-15 d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                 	<img src="../assets/images/avatar/2.jpg" class="avatar avatar-lg" alt="">
-                </div>
-                <div class="text-center flex-grow-1">
-                    <div class="text-dark fs-18">Mayra Sibley</div>
-                    <div>
-                        <span class="badge badge-sm badge-dot badge-primary"></span>
-                        <span class="text-muted fs-12">Active</span>
-                    </div>
-                </div>
-                <div class="chat-box-toggle">
-                    <button id="chat-box-toggle" class="waves-effect waves-circle btn btn-circle btn-danger-light h-40 w-40 rounded-circle l-h-50" type="button">
-                      <span class="icon-Close fs-22" style="background: #fff;"><span class="path1"></span><span class="path2"></span></span>
-                    </button>                    
-                </div>
-            </div>
-            <div class="chat-box-body">
-                <div class="chat-box-overlay">   
-                </div>
-                <div class="chat-logs">
-                    <div class="chat-msg user">
-                        <div class="d-flex align-items-center">
-                            <span class="msg-avatar">
-                                <img src="../assets/images/avatar/2.jpg" class="avatar avatar-lg" alt="">
-                            </span>
-                            <div class="mx-10">
-                                <a href="#" class="text-dark hover-primary fw-bold">Mayra Sibley</a>
-                                <p class="text-muted fs-12 mb-0">2 Hours</p>
-                            </div>
-                        </div>
-                        <div class="cm-msg-text">
-                            Hi there, I'm Jesse and you?
-                        </div>
-                    </div>
-                    <div class="chat-msg self">
-                        <div class="d-flex align-items-center justify-content-end">
-                            <div class="mx-10">
-                                <a href="#" class="text-dark hover-primary fw-bold">You</a>
-                                <p class="text-muted fs-12 mb-0">3 minutes</p>
-                            </div>
-                            <span class="msg-avatar">
-                                <img src="../assets/images/avatar/3.jpg" class="avatar avatar-lg" alt="">
-                            </span>
-                        </div>
-                        <div class="cm-msg-text">
-                           My name is Anne Clarc.         
-                        </div>        
-                    </div>
-                    <div class="chat-msg user">
-                        <div class="d-flex align-items-center">
-                            <span class="msg-avatar">
-                                <img src="../assets/images/avatar/2.jpg" class="avatar avatar-lg" alt="">
-                            </span>
-                            <div class="mx-10">
-                                <a href="#" class="text-dark hover-primary fw-bold">Mayra Sibley</a>
-                                <p class="text-muted fs-12 mb-0">40 seconds</p>
-                            </div>
-                        </div>
-                        <div class="cm-msg-text">
-                            Nice to meet you Anne.<br>How can i help you?
-                        </div>
-                    </div>
-                </div><!--chat-log -->
-            </div>
-            <div class="chat-input">      
-                <form>
-                    <input type="text" id="chat-input" placeholder="Send a message..."/>
-                    <button type="submit" class="chat-submit" id="chat-submit">
-                        <span class="icon-Send fs-22"></span>
-                    </button>
-                </form>      
-            </div>
-		</div>
-	</div>
-	
 	<!-- Page Content overlay -->
-	<script type="text/javascript" src="funciones/usuarios.js"></script>
+	<script type="text/javascript" src="funciones/alumnos.js"></script>
 	<!-- Vendor JS -->
 	<script src="src/js/vendors.min.js"></script>
 	<script src="src/js/pages/chat-popup.js"></script>
-  <script src="../assets/icons/feather-icons/feather.min.js"></script>	
+    <script src="../assets/icons/feather-icons/feather.min.js"></script>	
 	<script src="../assets/vendor_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
 	<script src="../assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
 	<script src="../assets/vendor_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>

@@ -21472,7 +21472,7 @@ body .main-header .navbar .nav > li.search-box > a:hover, body .main-header .nav
   height: 100vh;
   z-index: 999999;
   overflow: visible;
-  background: #fff url("../../../../images/preloaders/1.gif") no-repeat center center; }
+  background: #fff url("../../../assets/images/preloaders/1.gif") no-repeat center center; }
 
 .skin-toggle .switch {
   line-height: 24px; }
@@ -21776,7 +21776,7 @@ body .main-header .navbar .nav > li.search-box > a:hover, body .main-header .nav
   position: relative;
   width: 100%;
   padding: 10px 0 10px;
-  background-image: url(../../../../images/user-info.jpg); }
+  background-image: url(../../../images/user-info.jpg); }
   .user-panel:before, .user-panel:after {
     content: " ";
     display: table; }
