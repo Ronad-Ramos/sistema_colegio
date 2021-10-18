@@ -126,49 +126,63 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
 
 	if($_POST['tipo'] == "m"){
 
-		$detallesUs = $conexion->prepare("SELECT * FROM usuarios WHERE TIPO = 2 ORDER BY ID DESC");
+		$detallesUs = $conexion->prepare("SELECT * FROM matriculas ORDER BY ID DESC");
         $detallesUs->execute();
-        $userE = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
+        $dagta = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
+
 		$valor = '';
-		foreach($userE as $usuario){
-			$detallesUs = $conexion->prepare("SELECT * FROM grado WHERE ID = :d");
-			$detallesUs -> bindParam(':d', $usuario['GRADO'],); 
+
+		foreach($dagta as $matri){
+
+			$detallesUs = $conexion->prepare("SELECT * FROM usuarios WHERE ID = :u ");
+			$detallesUs -> bindParam(':u', $matri['ID_USUARIO'],); 
+			$detallesUs->execute();
+			$userName = $detallesUs->fetch(PDO::FETCH_ASSOC);
+
+			$detallesUs = $conexion->prepare("SELECT * FROM usuarios WHERE ID = :a AND ROL = 3");
+			$detallesUs -> bindParam(':a', $matri['ID_ALUMNO'],); 
+			$detallesUs->execute();
+			$alum = $detallesUs->fetch(PDO::FETCH_ASSOC);
+
+			$detallesUs = $conexion->prepare("SELECT * FROM usuarios WHERE ID = :p AND ROL = 4");
+			$detallesUs -> bindParam(':p', $matri['ID_APODERADO'],); 
+			$detallesUs->execute();
+			$apod = $detallesUs->fetch(PDO::FETCH_ASSOC);
+
+			$detallesUs = $conexion->prepare("SELECT * FROM grado WHERE ID = :p ");
+			$detallesUs -> bindParam(':p', $userName['ID_GRADO'],); 
 			$detallesUs->execute();
 			$grd = $detallesUs->fetch(PDO::FETCH_ASSOC);
 
-		$valor .='<tr>';
-		$valor .='	<th scope="row">'.$usuario['ID'].'</th>';
-		$valor .='	<td >';
-		if($usuario['FOTO_PERFIL']!=""){
-		$valor .='<img src="../perfil/src=img/'.$usuario['FOTO_PERFIL'].'" width="30" height="30" class="bg-light rounded-circle me-2" alt="Avatar">';
-		}else{
-		$valor .='<img src="../perfil/src=img/perfil.gif" width="30" height="30" class="bg-light rounded-circle me-2" alt="Avatar">';
-		}
-		$valor .='	<td class="text-fade">'.$usuario['NOMBRES'].'</td>';
-		$valor .='	<td class="text-fade">'.$usuario['APELLIDOS'].'</td>';
-		$valor .='	<td class="text-fade">'.$usuario['USUARIO'].'</td>';
-		$valor .='	<td class="text-fade">'.$usuario['CORREO'].'</td>';
-		if($usuario['GENERO'] == 1){
-		$valor .='	<td class="text-fade">Masculino</td>';
-		}else{
-		$valor .='	<td class="text-fade">Femenino</td>';
-		}
-		$valor .='	<td class="text-fade">'.$grd['NIVEL'].'</td>';
-		$valor .='	<td class="text-fade">'.$grd['GRADO'].'</td>';
-		$valor .='	<td class="text-fade">'.$grd['SECCION'].'</td>';
+			$valor .='<tr>';
+			$valor .='	<th scope="row">'.$matri['ID'].'</th>';
 
-		$valor .='	<td class="table-action">';
-		$valor .='		<button id="btnEditar'.$usuario['ID'].'" type="button" onclick="editarUser('.$usuario['ID'].');" class="waves-effect waves-circle btn btn-circle btn-success mb-5"><i class="mdi mdi-lead-pencil"></i></button>';
-		$valor .='		<button id="btnEliminar'.$usuario['ID'].'" type="button" onclick="eliminarUser('.$usuario['ID'].');" class="waves-effect waves-circle btn btn-circle btn-danger mb-5"><i class="mdi mdi-close-circle"></i></button>';
-		$valor .='	</td>';
-		$valor .='</tr>';
+			$valor .='	<td class="text-fade">'.$apod['NOMBRES'].'</td>';
+			$valor .='	<td class="text-fade">'.$apod['APELLIDOS'].'</td>';
+
+			$valor .='	<td class="text-fade">'.$alum['NOMBRES'].'</td>';
+			$valor .='	<td class="text-fade">'.$alum['APELLIDOS'].'</td>';
+
+			$valor .='	<td class="text-fade">'.$grd['NIVEL'].' </td>';
+			$valor .='	<td class="text-fade">'.$grd['GRADO'].' </td>';
+			$valor .='	<td class="text-fade">'.$grd['SECCION'].' </td>';
+
+			$valor .='	<td class="text-fade">'.$matri['FECHA'].'</td>';
+			$valor .='	<td class="text-fade"><a href="../archivos/matriculas/'.$matri['ARCHIVO'].'"> '.$matri['ARCHIVO'].'</a></td>';
+
+			$valor .='	<td class="table-action">';
+			$valor .='		<button id="btnEditar'.$matri['ID'].'" type="button" onclick="editarMatricula('.$matri['ID'].');" class="waves-effect waves-circle btn btn-circle btn-success mb-5"><i class="mdi mdi-lead-pencil"></i></button>';
+			$valor .='		<button id="btnEliminar'.$matri['ID'].'" type="button" onclick="eliminarMatricula('.$matri['ID'].');" class="waves-effect waves-circle btn btn-circle btn-danger mb-5"><i class="mdi mdi-close-circle"></i></button>';
+			$valor .='	</td>';
+			$valor .='</tr>';
 		}
+
 		echo $valor;
 	}
 
 	if($_POST['tipo'] == "a"){ $message = '';
 
-		$detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE ID =:d");
+		$detallesU = $conexion->prepare("SELECT * FROM matriculas WHERE ID =:d");
     	$detallesU -> bindParam(':d', $_POST['id'], PDO::PARAM_STR);
     	$detallesU->execute();
 
@@ -267,13 +281,28 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
 	}
 
 	if($_POST['tipo'] == "e"){
-		$sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :i");
+
+		$detallesUs = $conexion->prepare("SELECT * FROM matriculas WHERE ID = :u ");
+		$detallesUs -> bindParam(':u', $_POST['id']); 
+		$detallesUs->execute();
+		$matricula = $detallesUs->fetch(PDO::FETCH_ASSOC);
+
+		unlink('../../archivos/matricula/'.$matricula['ARCHIVO']);
+
+		$sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :al");
+        $resultado = $sentencia->execute([':al'=>$matricula['ID_ALUMNO']]);
+
+        $sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :ap");
+        $resultado = $sentencia->execute(['ap'=>$matricula['ID_APODERADO']]);
+
+		$sentencia = $conexion->prepare("DELETE FROM `matriculas` WHERE ID = :i");
         $resultado = $sentencia->execute(['i'=>$_POST['id']]);
+
 	}
 
 	if($_POST['tipo'] == "sue"){
 		
-		$detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE ID =:d");
+		$detallesU = $conexion->prepare("SELECT * FROM matriculas WHERE ID =:d");
     	$detallesU -> bindParam(':d', $_POST['user'], PDO::PARAM_STR);
     	$detallesU->execute();
 

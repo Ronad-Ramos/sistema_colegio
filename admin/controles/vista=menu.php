@@ -114,18 +114,13 @@
 				  </li>
 				</ul>
 			</li>
-			<li class="btn-group nav-item d-xl-inline-flex d-none">
-				<a href="#" class="waves-effect waves-light nav-link btn-primary-light svg-bt-icon" title="" id="live-chat">
-					<i data-feather="message-circle"></i>
-			    </a>
-			</li>
 			
 			<li class="btn-group nav-item d-xl-inline-flex d-none">
 				<a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link btn-primary-light svg-bt-icon" title="Full Screen">
 					<i data-feather="maximize"></i>
 			    </a>
 			</li>
-			
+<?php if(isset($_SESSION['usuario=cole'])){ ?> 
 			<!-- User Account-->
 			<li class="dropdown user user-menu">
 				<a href="#" class="waves-effect waves-light dropdown-toggle w-auto l-h-12 bg-transparent p-0 no-shadow" title="User" data-bs-toggle="modal" data-bs-target="#quick_user_toggle">
@@ -138,7 +133,7 @@
 					</div>
 				</a>
 			</li>		  
-         
+<?php } ?>         
         </ul>
       </div>
     </nav>

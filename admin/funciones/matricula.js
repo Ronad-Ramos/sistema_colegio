@@ -1,6 +1,6 @@
 
 //Ejecutar mostar alumnos=>
-mostrarUsuarios();
+mostrarMatricula();
 
 //registro de alumnos =>
 function registrarMatricula(){
@@ -53,7 +53,7 @@ function registrarMatricula(){
 
 
             if(dataObj[0].valor = 1){
-                //mostrarUsuarios();
+                //mostrarMatricula();
                 //$('#registrar').removeClass('show');
                 //$('#registrar').css('display', 'block');
 
@@ -87,7 +87,7 @@ function eliminarMatricula(e){
         },
         success:  function (response) { console.log(response);
             $('#btnEliminar'+e).css('display', 'block');
-            mostrarUsuarios();
+            mostrarMatricula();
         }
     });
 }
@@ -161,7 +161,7 @@ function editMatricula(){
 
 				//$('#enombresUsuario,#eapellidosUsuario,#ecorreoUsuario,#epasswordUsuario,#efechaUsuario').val('') 
 				//image.val('');
-				mostrarUsuarios();
+				mostrarMatricula();
 			}else{
 				$("#msm").html(dataObj[0].mensaje);
 			}
@@ -178,7 +178,7 @@ function mostrarMatricula(){
 	var parametros = { "tipo" : "m"};
     $.ajax({
         data:  parametros,
-        url:   'controles/code=alumnos.php',
+        url:   'controles/code=matricula.php',
         type:  'post',
         beforeSend: function () {
             $('#tbody').html('<p>Cargando...</p>');
