@@ -287,16 +287,16 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
 		$detallesUs->execute();
 		$matricula = $detallesUs->fetch(PDO::FETCH_ASSOC);
 
-		unlink('../../archivos/matricula/'.$matricula['ARCHIVO']);
+		//unlink('../../archivos/matricula/'.$matricula['ARCHIVO']);
+
+		$sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :ap");
+        $resultado = $sentencia->execute([ ':ap'=> $matricula['ID_APODERADO'] ]);
 
 		$sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :al");
-        $resultado = $sentencia->execute([':al'=>$matricula['ID_ALUMNO']]);
-
-        $sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :ap");
-        $resultado = $sentencia->execute(['ap'=>$matricula['ID_APODERADO']]);
-
+        $resultado = $sentencia->execute([ ':al'=> $matricula['ID_ALUMNO'] ]);
+        
 		$sentencia = $conexion->prepare("DELETE FROM `matriculas` WHERE ID = :i");
-        $resultado = $sentencia->execute(['i'=>$_POST['id']]);
+        $resultado = $sentencia->execute([ ':i'=> $_POST['id'] ]);
 
 	}
 
