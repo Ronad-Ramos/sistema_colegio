@@ -49,7 +49,7 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 
 	if($_POST['tipo'] == "m"){
 
-		$detallesUs = $conexion->prepare("SELECT * FROM cursos  ORDER BY ID DESC");
+		$detallesUs = $conexion->prepare("SELECT * FROM curso  ORDER BY ID DESC");
         $detallesUs->execute();
         $curs = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
 		$valor = '';

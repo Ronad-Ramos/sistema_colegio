@@ -29,7 +29,7 @@
 				<li>
 					<a href="contact_us.php">Contacto</a>
 				</li>
-				<?php if(isset($_SESSION['usuario=cole']) AND $_SESSION['usuario=cole'] !="") { ?>
+				<?php if(isset($_SESSION['usuario=cole'])) { ?>
 				<li>
 					<a href="userprofile.php?user=<?php  echo $_SESSION['usuario=cole'];?>">Perfil</a>
 				</li>

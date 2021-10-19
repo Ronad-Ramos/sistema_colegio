@@ -1,9 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION['usuario']) && $_SESSION['usuario'] !="" ) {
-	
-}else{
+if(!isset($_SESSION['usuario=cole'])) {
 	header("location: auth.php");
 }
 

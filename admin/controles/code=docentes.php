@@ -70,6 +70,7 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 		$detallesUs = $conexion->prepare("SELECT * FROM usuarios WHERE ROL = 5");
         $detallesUs->execute();
         $userE = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
+        
 		$valor = '';
 		foreach($userE as $usuario){
 		

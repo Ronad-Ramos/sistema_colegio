@@ -1,28 +1,26 @@
 <?php
  session_start();
  include "code=conexion.php";
+
  if (isset($_POST["tipo"])){
+
  	if ($_POST["tipo"]==1){ 
-        $detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE CORREO=:c");
-        $detallesU -> bindParam(':c', $_POST["correo"], PDO::PARAM_STR);
-        $detallesU->execute();
+
+	       $detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE CORREO=:c");
+	       $detallesU -> bindParam(':c', $_POST["correoL"]);
+	       $detallesU->execute();
 
 		$detail = $detallesU->fetch(PDO::FETCH_ASSOC);
 		$count = $detallesU->rowCount();
+
  		if($count > 0){
- 			if($_POST["password"] === $detail['PASSWORD']){
+ 			if($_POST["passwordL"] === $detail['PASSWORD']){
 
 				$_SESSION["usuario=cole"] = $detail['USUARIO'];
-				
-				$valor = '1';
-				$mensaje = "Iniciando sesion";
-				                            
-			}else{$valor = '0'; $mensaje = "Contraseña incorrecta";}
 
- 		}else{$valor = '0'; $mensaje = "El usuario no existe";}
-
- 		$return[] = array("mensaje" => $mensaje, "valor" => $valor);
- 		echo json_encode($return);
+				if($_SESSION["usuario=cole"] !=""){ echo "Iniciando"; }else{ echo "No se creo la sesion"; }				                            
+			}else{ echo "Contraseña incorrecta"; }
+ 		}else{ echo "El usuario no existe"; }
 
  	}
 

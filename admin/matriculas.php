@@ -155,51 +155,38 @@
 							<div class="modal-body">
 								<div class="text-center mt-2 mb-4">
 									<a class="text-success">
-										<span>Editar usuario</span>
+										<span>Editar Matricula</span>
 									</a>
 								</div>
-												<div class="mb-3">
-													<label for="simpleinput" class="form-label">Nombres</label>
-													<input type="text" id="enombresUsuario" class="form-control">
-												</div>
 
-												<div class="mb-3">
-													<label for="simpleinput" class="form-label">Apellidos</label>
-													<input type="text" id="eapellidosUsuario" class="form-control">
-												</div>
+								<div class="mb-3">
+									<label for="simpleinput" class="form-label">Nombres del apoderado</label>
+									<input type="text" id="nombreApoderado" class="form-control">
+								</div>
 
-												<div class="mb-3">
-													<label for="example-email" class="form-label">Correo</label>
-													<input type="email" id="ecorreoUsuario" class="form-control">
-												</div>
+								<div class="mb-3">
+									<label for="simpleinput" class="form-label">Apellidos del apoderado</label>
+									<input type="text" id="apellidoApoderado" class="form-control">
+								</div>
 
-												<div class="mb-3">
-													<label for="password" class="form-label">Contraseña</label>
-													<div class="input-group input-group-merge">
-														<input type="password" id="epasswordUsuario" class="form-control" accept="">
-														<div class="input-group-text" id="eye" data-password="false" onclick="verPass(1);">
-															<span class="mdi mdi-eye"></span>
-														</div>
-													</div>
-												</div>
+								<div class="mb-3">
+									<label for="simpleinput" class="form-label">Nombres del alumno</label>
+									<input type="text" id="nombreAlumno" class="form-control">
+								</div>
 
-												<div class="mb-3">
-													<label for="example-date" class="form-label">Fecha de nacimiento</label>
-													<input type="date" id="efechaUsuario" value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>" class="form-control">
-													<input type="hidden" id="eiduser" value="" class="form-control">
-												</div>
+								<div class="mb-3">
+									<label for="simpleinput" class="form-label">Apellidos del alumno</label>
+									<input type="text" id="apellidosAlumno" class="form-control">
+									<input type="hidden" id="eiduser" class="form-control">
+								</div>
 
-												<div class="mb-3">
-													<label for="example-fileinput" class="form-label">Foto de perfil</label>
-													<input type="file" id="efotoUsuario" class="form-control">
-												</div>
 
-									<div class="mb-3 text-center">
-										<button class="btn btn-primary" type="submit" id="btnEditc" onclick="$('#editar').removeClass('show');
+								<div class="mb-3 text-center">
+									<button class="btn btn-primary" type="submit" id="btnEditc" onclick="$('#editar').removeClass('show');
 			$('#editar').css('display', 'none');" >Cancelar</button>
-										<button class="btn btn-primary" type="submit" id="btnEdit" onclick="editUser();" >Editar</button>
-									</div>
-									<p id="msme" ></p>
+									<button class="btn btn-primary" type="submit" id="btnEdit" onclick="editUser();" >Editar</button>
+								</div>
+								<p id="msme" ></p>
 								
 							</div>
 						</div><!-- /.modal-content -->

@@ -4,8 +4,8 @@
 		<a href="index.html" class="logo">
 		  <!-- logo-->
 		  <div class="logo-mini w-30">
-			  <span class="light-logo"><img src="../assets/images/logo.png" alt="logo"></span>
-			  <span class="dark-logo"><img src="../assets/images/logo.png" alt="logo"></span>
+			  <span class="light-logo"><img src="../assets/images/logo1.png" alt="logo"></span>
+			  <span class="dark-logo"><img src="../assets/images/logo1.png" alt="logo"></span>
 		  </div>
 		  <div class="logo-lg">
 			  <span class="light-logo"><img src="../assets/images/logo.png" alt="logo"></span>
@@ -126,10 +126,14 @@
 				<a href="#" class="waves-effect waves-light dropdown-toggle w-auto l-h-12 bg-transparent p-0 no-shadow" title="User" data-bs-toggle="modal" data-bs-target="#quick_user_toggle">
 					<div class="d-flex pt-1 align-items-center">
 						<div class="text-end me-10">
-							<p class="pt-5 fs-14 mb-0 fw-700">Nil Yeager</p>
+							<p class="pt-5 fs-14 mb-0 fw-700"><?php echo $info['NOMBRES']; ?></p>
 							<small class="fs-10 mb-0 text-uppercase text-mute">Admin</small>
 						</div>
-						<img src="../assets/images/avatar/avatar-13.png" class="avatar rounded-circle bg-primary-light h-40 w-40" alt="" />
+						<?php if(isset($info['FOTO_PERFIL']) AND $info['FOTO_PERFIL'] !="" ){  ?>
+						<img src="../perfil/src=img/<?php echo $info['FOTO_PERFIL']; ?>" class="avatar rounded-circle bg-primary-light h-40 w-40" alt="" />
+						<?php }else{  ?>
+						<img src="../perfil/src=img/perfil.gif" class="avatar rounded-circle bg-primary-light h-40 w-40" alt="" />
+						<?php  } ?>
 					</div>
 				</a>
 			</li>		  

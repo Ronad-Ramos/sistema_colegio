@@ -395,7 +395,7 @@ if (isset($_SESSION['usuario=cole'])) {
 				</div>
 			</div>
 		</div>
-	</section>	
+	</section>
 	<?php include "footer.php" ?>
 	<!-- Vendor JS -->
 	<script src="assets/js/vendors.min.js"></script>	

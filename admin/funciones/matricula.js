@@ -80,12 +80,13 @@ function eliminarMatricula(e){
 	var parametros = { "tipo" : "e", "id" : e};
     $.ajax({
         data:  parametros,
-        url:   'controles/code=alumnos.php',
+        url:   'controles/code=matricula.php',
         type:  'post',
         beforeSend: function () {
             $('#btnEliminar'+e).css('display','none');
         },
         success:  function (response) { console.log(response);
+
             $('#btnEliminar'+e).css('display', 'block');
             mostrarMatricula();
         }
@@ -97,24 +98,28 @@ function editarMatricula(u){
 	var parametros = { "tipo" : "sue", 'user' : u};
     $.ajax({
         data:  parametros,
-        url:   'controles/code=alumnos.php',
+        url:   'controles/code=matricula.php',
         type:  'post',
         beforeSend: function () {
-            //$('#tbody').html('<p>Cargando...</p>');
+            $('#btnEdit').html('Editando...');
         },
-        success:  function (response) { 
+        success:  function (response) { console.log(response);
+
+            $('#btnEdit').html('Editar');
             
            	var dataObj = JSON.parse(response);
+
 
 			$('#editar').addClass('show');
 			$('#editar').css('display', 'block');
 
-			$('#eiduser').val(dataObj[0].info.ID);
-    		$('#enombresUsuario').val(dataObj[0].info.NOMBRES);
-    		$('#eapellidosUsuario').val(dataObj[0].info.APELLIDOS);
-    		$('#ecorreoUsuario').val(dataObj[0].info.CORREO);
-    		$('#epasswordUsuario').val(dataObj[0].info.PASSWORD);
-    		$('#efechaUsuario').val(dataObj[0].info.FECHA_NACIMIENTO);
+			$('#eiduser').val(dataObj[0].idMatri);
+
+    		$('#nombreApoderado').val(dataObj[0].infoApoderado.NOMBRES);
+    		$('#apellidoApoderado').val(dataObj[0].infoApoderado.APELLIDOS);
+
+    		$('#nombreAlumno').val(dataObj[0].infoAlumno.NOMBRES);
+    		$('#apellidosAlumno').val(dataObj[0].infoAlumno.APELLIDOS);
 
         }
     });
@@ -139,7 +144,7 @@ function editMatricula(){
     
     $.ajax({
         data:  formData,
-        url:   'controles/code=alumnos.php',
+        url:   'controles/code=matricula.php',
         type:  'post',
         contentType:false,
         cache: false,
@@ -147,7 +152,7 @@ function editMatricula(){
         beforeSend: function () {
            $('#btnEdit').css('display', 'none');
         },
-        success:  function (response) { //console.log(response);
+        success:  function (response) { console.log(response);
 
         	$('#btnEdit').css('display', 'block');
 
@@ -162,10 +167,7 @@ function editMatricula(){
 				//$('#enombresUsuario,#eapellidosUsuario,#ecorreoUsuario,#epasswordUsuario,#efechaUsuario').val('') 
 				//image.val('');
 				mostrarMatricula();
-			}else{
-				$("#msm").html(dataObj[0].mensaje);
-			}
-			
+            }else{ $("#msm").html(dataObj[0].mensaje); }
         },
         error: function(error){
             console.log(error);

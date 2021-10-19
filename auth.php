@@ -1,6 +1,10 @@
 <main><main>
-<?php  session_start();
-if(isset($_SESSION['usuario=cole']) AND $_SESSION['usuario=cole'] !="") { header('Location: index.php'); } 
+<?php  
+session_start();
+
+if(isset($_SESSION['usuario=cole'])) { 
+    header('Location: index.php'); 
+} 
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,6 +24,7 @@ if(isset($_SESSION['usuario=cole']) AND $_SESSION['usuario=cole'] !="") { header
                         <h3>¿Ya tienes una cuenta?</h3>
                         <p>Inicia sesión para entrar en la página</p>
                         <button id="btn__iniciar-sesion">Iniciar Sesión</button>
+
                     </div>
                     <div class="caja__trasera-register">
                         <h3>¿Aún no tienes una cuenta?</h3>
@@ -36,6 +41,8 @@ if(isset($_SESSION['usuario=cole']) AND $_SESSION['usuario=cole'] !="") { header
                         <input type="text" placeholder="Correo Electronico" id="correo_login" required>
                         <input type="password" placeholder="Contraseña" id="password_login" required>
                         <button type="button" onclick="loginAuth()" id="btnlogin">Entrar</button>
+                        <br><br>
+                        <p id="msj"></p>
                     </form>
 
                     <!--Register-->
@@ -46,6 +53,8 @@ if(isset($_SESSION['usuario=cole']) AND $_SESSION['usuario=cole'] !="") { header
                         <input type="text" placeholder="Correo Electronico" id="correo_register" required>
                         <input type="password" placeholder="Contraseña" id="password_register" required>
                         <button type="button" onclick="registroAuth();" id="btnRegis">Regístrarse</button>
+                        <br><br>
+                        <p id="msg"></p>
                     </form>
                 </div>
             </div>

@@ -3,7 +3,7 @@ function loginAuth(){
 	if($('#correo_login').val()!="") {
    		if($('#password_login').val()!=""){
         
-       		var datos={"tipo":"1", "correo":$('#correo_login').val(),"password":$('#password_login').val()};
+       		var datos={"tipo":"1", "correoL":$('#correo_login').val(),"passwordL":$('#password_login').val()};
         	$.ajax({
         		data: datos,
         		url:  "controles/code=auth.php",
@@ -11,23 +11,19 @@ function loginAuth(){
         		beforeSend: function (){
         		   $('#btnlogin').html('Cargando...');
         		},
-        		success: function(respuesta){
+        		success: function(respuesta){ 
 
     			  $('#btnlogin').html('Entrar');
 
-    			  var dataObj = JSON.parse(respuesta)
+    			  $('#msj').html(respuesta);
 
-    			  if(dataObj[0].valor = 0 ){
-                  	console.log(dataObj[0].mensaje ); 
-                  }else{
-                  	window.location.href="index.php"; 
-                  }
+    			  if(respuesta == "Iniciando" ){ location.reload(); }
 
 				}
         	});
 
-    	}else{ console.log("Inserte la contraseña"); }
-	}else{console.log("Inserte su correo"); }
+    	}else{ $('#msj').html("Inserte la contraseña"); }
+	}else{$('#msj').html("Inserte su correo"); }
 }
 
 
@@ -45,14 +41,14 @@ if ($('#nombre_register').val()!="") {
 		        		url:  "controles/code=auth.php",
 		        		type: "post",
 		        		beforeSend: function (){
-		        		  $('#btnRegis').html('Cargando...');
+		        		  $('#btnRegis').html('Cargando...'); 
 		        		},
-		        		success: function(respuesta){  console.log(respuesta);
+		        		success: function(respuesta){  //console.log(respuesta);
 		    			  
 		    			  var dataObj = JSON.parse(respuesta)
 		    			  $('#btnRegis').html('Registrarse');
 
-		    			  if(dataObj[0].valor = 0){
+		    			  if(dataObj[0].valor == 0){
                   			console.log(dataObj[0].mensaje); 
 		                  }else{
 			                window.location.href="index.php"; 
@@ -62,9 +58,9 @@ if ($('#nombre_register').val()!="") {
         			})
 
 
-    		}else{ console.log("Inserte la contraseña"); }
-		}else{ console.log("Inserte su correo"); }
-	}else{ console.log("Inserte su apellido"); }
-}else{ console.log("Inserte su nombre"); }
+    		}else{ $('#msg').html("Inserte la contraseña"); }
+		}else{ $('#msg').html("Inserte su correo");  }
+	}else{ $('#msg').html("Inserte su apellido"); }
+}else{ $('#msg').html("Inserte su nombre"); }
 
 }

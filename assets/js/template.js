@@ -524,7 +524,7 @@ $(function () {
 
 });
 
-
+/*
 var options = {
 	title: 'This website uses cookies.<br> The General Data Protection Regulation (GDPR) and the ePrivacy Directive (ePR) affect how you as a website owner may use cookies and online tracking of visitors from the EU.',
 	message: 'We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services',
@@ -555,5 +555,7 @@ $(document).ready(function() {
 		$('body').ihavecookies(options, 'reinit');
 	});
 });
+
+*/
 
 

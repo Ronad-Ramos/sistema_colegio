@@ -150,7 +150,7 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
 			$apod = $detallesUs->fetch(PDO::FETCH_ASSOC);
 
 			$detallesUs = $conexion->prepare("SELECT * FROM grado WHERE ID = :p ");
-			$detallesUs -> bindParam(':p', $userName['ID_GRADO'],); 
+			$detallesUs -> bindParam(':p', $alum['ID_GRADO'],); 
 			$detallesUs->execute();
 			$grd = $detallesUs->fetch(PDO::FETCH_ASSOC);
 
@@ -188,54 +188,7 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
 
     	$info = $detallesU->fetch(PDO::FETCH_ASSOC);
 
-		//Si el archivo contiene algo y es diferente de vacio
-        if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != "") {
-        
-            $imgFile = $_FILES['image']['name'];
-            $tmp_dir = $_FILES['image']['tmp_name'];
-            $imgSize = $_FILES['image']['size'];
-
-            $upload_dir = '../../perfil/src=img/'; // upload directory
- 
-               $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
-              
-               // valid image extensions
-               $valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
-
-               // rename uploading image
-               $userpic = rand(1000,1000000).".".$imgExt;
-                
-                    // allow valid image file formats
-                    if(in_array($imgExt, $valid_extensions)){   
-                        // Check file size '5MB'
-                        if($_FILES['image']['size'] > 5000000) { //5 MB (size is also in bytes)
-
-                            // File too big
-                            $message .= '<p>Tu archivo es demasiado grande.</p>'; $valor = '0';
-                            
-                        } else { 
-
-                        	move_uploaded_file($tmp_dir,$upload_dir.$userpic);
-
-                        	$rest = substr($info['FOTO_PERFIL'], 0, 10);
-                            unlink('../../perfil/src=img/'.$rest);
-                        	
-                            $photo = $userpic."?user=".$info['USUARIO'];
-                            $sentencia = $conexion->prepare("UPDATE `usuarios` SET `FOTO_PERFIL`=? WHERE `USUARIO`=?");
-                            $resultado = $sentencia->execute([$photo,$info['USUARIO']]);
-
-                          	$message .= '<p>Actualizo su foto de perfil exitozamente.</p>'; $valor = '0';
-                            
-                        }
-                    }else{
-                        $message .= '<p>Solo se permiten archivos JPG, JPEG, PNG y GIF.</p>'; $valor = '0'; 
-                    }
-        }else{
-           $sentencia = $conexion->prepare("UPDATE `usuarios` SET `FOTO_PERFIL`=? WHERE `ID`=?");
-           $resultado = $sentencia->execute([$info['FOTO_PERFIL'],$info['ID']]); 
-           $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
-        }
-
+		
 		if (isset($_POST['nombres']) AND $_POST['nombres'] != "") {
 			$sentencia = $conexion->prepare("UPDATE `usuarios` SET `NOMBRES`=? WHERE `ID`=?");
             $resultado = $sentencia->execute([$_POST['nombres'],$info['ID']]);
@@ -246,57 +199,30 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
             $resultado = $sentencia->execute([$_POST['apellidos'],$info['ID']]);
             $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
 		}
-		if (isset($_POST['correo']) AND $_POST['correo'] != "") {
-			if(filter_var($_POST['correo'], FILTER_VALIDATE_EMAIL)){
-				$sentencia = $conexion->prepare("UPDATE `usuarios` SET `CORREO`=? WHERE `ID`=?");
-            	$resultado = $sentencia->execute([$_POST['correo'],$info['ID']]);
-
-            	$clave = explode("@", $_POST['correo']);
-          		$user = $clave[0];
-
-          		$sentencia = $conexion->prepare("UPDATE `usuarios` SET `USUARIO`=? WHERE `ID`=?");
-            	$resultado = $sentencia->execute([$user ,$info['ID']]);
-
-            	$message .= '<p>Correo y usuario actualizado correctamente</p>'; $valor = '1';
-
-            }else{
-        		$message .= '<p>El correo no es valido</p>'; $valor = '0';
-            }
-		}
 		
-		if (isset($_POST['password']) AND $_POST['password'] != "") {
-			$sentencia = $conexion->prepare("UPDATE `usuarios` SET `PASSWORD`=? WHERE `ID`=?");
-            $resultado = $sentencia->execute([$_POST['password'],$info['ID']]);
-            $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
-		}
-		if (isset($_POST['nacimiento']) AND $_POST['nacimiento'] != "") {
-			$sentencia = $conexion->prepare("UPDATE `usuarios` SET `FECHA_NACIMIENTO`=? WHERE `ID`=?");
-            $resultado = $sentencia->execute([$_POST['nacimiento'],$info['ID']]);
-            $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
-		}
 
 		$return_arr[] = array("mensaje" => $message, "valor" => $valor);
         echo json_encode($return_arr);
 
 	}
 
-	if($_POST['tipo'] == "e"){
+	if($_POST['tipo'] == "e"){ 
 
 		$detallesUs = $conexion->prepare("SELECT * FROM matriculas WHERE ID = :u ");
 		$detallesUs -> bindParam(':u', $_POST['id']); 
-		$detallesUs->execute();
+		$detallesUs -> execute();
 		$matricula = $detallesUs->fetch(PDO::FETCH_ASSOC);
 
-		//unlink('../../archivos/matricula/'.$matricula['ARCHIVO']);
+		$sentencia = $conexion->prepare("DELETE FROM `matriculas` WHERE ID = :i");
+        $resultado = $sentencia->execute([ ':i' => $_POST['id'] ]);
+
+		unlink('../../archivos/matricula/'.$matricula['ARCHIVO']);
 
 		$sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :ap");
         $resultado = $sentencia->execute([ ':ap'=> $matricula['ID_APODERADO'] ]);
 
 		$sentencia = $conexion->prepare("DELETE FROM `usuarios` WHERE ID = :al");
-        $resultado = $sentencia->execute([ ':al'=> $matricula['ID_ALUMNO'] ]);
-        
-		$sentencia = $conexion->prepare("DELETE FROM `matriculas` WHERE ID = :i");
-        $resultado = $sentencia->execute([ ':i'=> $_POST['id'] ]);
+        $resultado = $sentencia->execute([ ':al'=> $matricula['ID_ALUMNO'] ]);  
 
 	}
 
@@ -306,9 +232,21 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
     	$detallesU -> bindParam(':d', $_POST['user'], PDO::PARAM_STR);
     	$detallesU->execute();
 
-    	$info = $detallesU->fetch(PDO::FETCH_ASSOC);
+    	$matricula = $detallesU->fetch(PDO::FETCH_ASSOC);
 
-    	$return_arr[] = array("info" => $info);
+    	$detallesApod = $conexion->prepare("SELECT * FROM usuarios WHERE ID =:d");
+    	$detallesApod -> bindParam(':d', $matricula['ID_ALUMNO'], PDO::PARAM_STR);
+    	$detallesApod->execute();
+    	$infoApoderado = $detallesApod->fetch(PDO::FETCH_ASSOC);
+
+
+    	$detallesAlum = $conexion->prepare("SELECT * FROM usuarios WHERE ID =:d");
+    	$detallesAlum -> bindParam(':d', $matricula['ID_APODERADO'], PDO::PARAM_STR);
+    	$detallesAlum->execute();
+    	$infoAlumno = $detallesAlum->fetch(PDO::FETCH_ASSOC);
+
+
+    	$return_arr[] = array("infoApoderado" => $infoApoderado , "infoAlumno" => $infoAlumno, "idMatri" => $matricula['ID']);
         echo json_encode($return_arr);
 	}
 	
