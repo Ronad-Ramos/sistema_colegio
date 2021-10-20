@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 18-10-2021 a las 18:52:53
+-- Tiempo de generación: 20-10-2021 a las 06:32:21
 -- Versión del servidor: 8.0.21
 -- Versión de PHP: 7.3.21
 
@@ -147,16 +147,7 @@ CREATE TABLE IF NOT EXISTS `matriculas` (
   PRIMARY KEY (`ID`),
   KEY `ID_USUARIO` (`ID_USUARIO`),
   KEY `matriculas_ibfk_1` (`ID_ALUMNO`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `matriculas`
---
-
-INSERT INTO `matriculas` (`ID`, `ID_USUARIO`, `ID_ALUMNO`, `ID_APODERADO`, `FECHA`, `ARCHIVO`) VALUES
-(1, 3, 8, 7, '2021-10-18', 'ronald.ramos.malca.30381953.docx'),
-(2, 3, 10, 9, '2021-10-18', 'emilisita_tuchikita_pkm331868.docx'),
-(3, 3, 12, 11, '2021-10-18', 'sefesf117058.pdf');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -170,9 +161,11 @@ CREATE TABLE IF NOT EXISTS `retiro` (
   `ID_USUARIO` int NOT NULL,
   `ID_ALUMNO` int NOT NULL,
   `ID_APODERADO` int NOT NULL,
+  `FECHA` date NOT NULL,
+  `ARCHIVO` text NOT NULL,
   PRIMARY KEY (`ID_RETIRO`),
   KEY `retiro_ibfk_1` (`ID_USUARIO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -228,7 +221,8 @@ CREATE TABLE IF NOT EXISTS `user_curso` (
   `ID_USUARIO` int NOT NULL,
   `ID_CURSO` int NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `ID_USUARIO` (`ID_USUARIO`)
+  KEY `ID_USUARIO` (`ID_USUARIO`),
+  KEY `ID_CURSO` (`ID_CURSO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -257,35 +251,11 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `DIRECCION` varchar(500) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `usuarios_ibfk_1` (`ROL`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`ID`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `GENERO`, `SOBRE_MI`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`, `FOTO_PERFIL`, `ID_GRADO`, `DNI`, `NRO_TELEFONICO`, `DIRECCION`) VALUES
-(7, 4, 'Ronald Antonio', 'Ramos Malca', 'ronald.ramos.malca.30@gmail.com', 'ronald.ramos.malca.30', 'micolegio2021', 0, '', '2021-10-18', '0000-00-00', '', 0, 22222, 920554246, '222'),
-(8, 3, 'Ronald Antonio', 'Ramos Malca', 'ronald.ramos.malca.30@gmail.com', 'ronald.ramos.malca.30', 'micolegio2021', 1, '', '2021-10-18', '2021-10-04', '', 2, 275757575, 920554246, '222'),
-(9, 4, 'emiliseño', 'emi', 'emilisita_tuchikita_pkm@gmail.com', 'donaamama', 'micolegio2021', 0, '', '2021-10-18', '0000-00-00', '', 0, 5168454, 920554246, 'Unlugar'),
-(10, 3, 'Emili', 'Roquesita', 'emilisita_tuchikita_pkm@gmail.com', 'emilisita_tuchikita_pkm', 'micolegio2021', 2, '', '2021-10-18', '1995-12-04', '', 20, 6665158, 2875868, 'location'),
-(11, 4, 'sdsbf', 'fsefsef', 'sefesf@gmail.com', 'fesfse', 'micolegio2021', 0, '', '2021-10-18', '0000-00-00', '', 0, 85822, 75752, '65662'),
-(12, 3, 'fsefsef', 'efsfsef', 'sefesf@gmail.com', 'sefesf', 'micolegio2021', 1, '', '2021-10-18', '2021-10-18', '', 32, 238272, 242422, '651'),
-(13, 4, 'Ronald Antonio', 'Ramos Malca', 'ronald.ramos.malca.30@gmail.com', 'ronald.ramos.malca.30', 'micolegio2021', 0, '', '2021-10-18', '0000-00-00', '', 0, 75727, 920554246, '727'),
-(14, 3, 'fwefseg', 'gesfgsefsef', 'ronald.ramos.malca.30@gmail.com', 'ronald.ramos.malca.30', 'micolegio2021', 1, '', '2021-10-18', '2021-10-18', '', 6, 27227, 27272, '27272'),
-(15, 2, 'Ronald Antonio', 'Ramos Malca', 'ronald.ramos@gmail.com', 'ronald.ramos', '156', 1, '', '0000-00-00', '0000-00-00', '', 0, 0, 0, ''),
-(16, 2, 'Ronald Antonio', 'Ramos Malca', 'ronald.resfsfsef@gmail.com', 'ronald.resfsfsef', '156', 0, '', '0000-00-00', '0000-00-00', '', 0, 0, 0, ''),
-(17, 2, 'Ronald Antonio', 'Ramos Malca', 'ronald.hgxchv@gmail.com', 'ronald.hgxchv', '156', 0, '', '0000-00-00', '0000-00-00', '', 0, 0, 0, ''),
-(18, 5, 'Ronald Antonio', 'Ramos Malca', 'rgdrgdrg@gmail.com', 'rgdrgdrg', 'ff', 0, '', '2021-10-18', '2021-10-18', 'orormn.jpeg', 0, 0, 0, '');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `curso`
---
-ALTER TABLE `curso`
-  ADD CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `user_curso` (`ID`);
 
 --
 -- Filtros para la tabla `matriculas`
@@ -309,7 +279,8 @@ ALTER TABLE `transferencia`
 -- Filtros para la tabla `user_curso`
 --
 ALTER TABLE `user_curso`
-  ADD CONSTRAINT `user_curso_ibfk_1` FOREIGN KEY (`ID_USUARIO`) REFERENCES `usuarios` (`ID`);
+  ADD CONSTRAINT `user_curso_ibfk_1` FOREIGN KEY (`ID_USUARIO`) REFERENCES `usuarios` (`ID`),
+  ADD CONSTRAINT `user_curso_ibfk_2` FOREIGN KEY (`ID_CURSO`) REFERENCES `curso` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Filtros para la tabla `usuarios`

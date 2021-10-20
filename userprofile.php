@@ -75,7 +75,7 @@ if (isset($_SESSION['usuario=cole'])) {
 					<div class="box position-sticky t-100">
 						<div class="box-body text-center">
 							<div class="mb-20 mt-20">
-								<?php  if( $infoGet['GENERO'] != "" ){ ?>
+								<?php  if( $infoGet['FOTO_PERFIL'] != "" ){ ?>
 								<img src="perfil/src=img/<?php  echo $infoGet['FOTO_PERFIL'];?>" width="200" class="rounded-circle bg-info-light" alt="user">
 								<?php  }else{ ?>
 								<img src="perfil/src=img/perfil.gif" width="200" class="rounded-circle bg-info-light" alt="user">
@@ -92,16 +92,14 @@ if (isset($_SESSION['usuario=cole'])) {
 									if($infoGet['ROL'] == 4 ){$val = "Apoderado";}
 									if($infoGet['ROL'] == 5 ){$val = "Profesor";} ?>
 									<div class="badge badge-info-light fs-16"><?php echo $val; ?></div>
-								<?php  }else{ 	
+								<?php  }else if($infoGet['GENERO'] == 2 ){ 	
 							 		if($infoGet['ROL'] == 1 ){$val = "Administradora";}
 									if($infoGet['ROL'] == 2 ){$val = "Usuaria";}
 									if($infoGet['ROL'] == 3 ){$val = "Alumna";}
 									if($infoGet['ROL'] == 4 ){$val = "Apoderada";}
 									if($infoGet['ROL'] == 5 ){$val = "Profesora";} ?>
 									<div class="badge badge-info-light fs-16"><?php echo $val; ?></div>
-								<?php 
-							 	} 
-							?>
+								<?php  }else{ echo "";} ?>
 
 						</div>
 						<div class="p-15 bt-1 bb-1">
@@ -124,7 +122,7 @@ if (isset($_SESSION['usuario=cole'])) {
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" id="pills-courses-tab" data-bs-toggle="pill" href="#pills-courses" role="tab" aria-controls="pills-courses" aria-selected="true">
-									<i class="me-10 mdi mdi-book"></i>Cursos <span class="pull-right badge bg-info-light">1310</span>
+									<i class="me-10 mdi mdi-book"></i>Cursos <span class="pull-right badge bg-info-light">-</span>
 								</a>
 							</li>
 							<?php if (isset($_SESSION['usuario=cole']) AND $_SESSION['usuario=cole'] == $infoGet['USUARIO']){ ?>

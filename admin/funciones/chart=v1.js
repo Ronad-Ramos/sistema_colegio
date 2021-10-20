@@ -47,7 +47,7 @@ function info(){
                     align: 'left', //Alineación. Puede ser left, right o center
                 },
                 subtitle: {
-                    text: 'virgen_de_emili.com/reporte.dp',//Subtítulo. Si no queremos incluirlo, eliminamos todo este objeto
+                    text: 'v.d.g/reporte.db',//Subtítulo. Si no queremos incluirlo, eliminamos todo este objeto
                     align: 'left', //La alineación aplica igual que para el título
                 },
                 xaxis: {

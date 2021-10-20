@@ -52,7 +52,7 @@ function registrarUser(){
             var dataObj = JSON.parse(response);
             $("#msm").html(dataObj[0].mensaje);
 
-            if(dataObj[0].valor = 1){
+            if(dataObj[0].valor == 1){
                 mostrarUsuarios();
                 $('#registrar').removeClass('show');
                 $('#registrar').css('display', 'block');
@@ -150,7 +150,7 @@ function editUser(){
         	var dataObj = JSON.parse(response);
             $("#msme").html(dataObj[0].mensaje);
 
-            if(dataObj[0].valor = 1){
+            if(dataObj[0].valor== 1){
             	
 				$('#editar').removeClass('show');
 				$('#editar').css('display', 'none');

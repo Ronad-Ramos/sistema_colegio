@@ -54,8 +54,8 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 
 			}else{ $message = 'Solo se permiten jpg - png - jpeg.'; $valor = '0'; }
 		}else{ 
-			$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `CODIGO`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`) VALUES (NULL,?,?,?,?,?,?,?,NOW(),?)");
-			$resultado = $sentencia->execute([$codigo,"2",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$_POST['nacimiento']]); 
+			$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`) VALUES (NULL,?,?,?,?,?,?,NOW(),?)");
+			$resultado = $sentencia->execute(["2",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$_POST['nacimiento']]); 
 			$message = 'Cargado correctamente - sin foto de perfil'; $valor = '1';
 		}
 

@@ -23,6 +23,7 @@
 					<i data-feather="menu"></i>
 			    </a>
 			</li>
+			<!--
 			<li class="btn-group d-lg-inline-flex d-none">
 				<div class="app-menu">
 					<div class="search-bx mx-5">
@@ -37,6 +38,7 @@
 					</div>
 				</div>
 			</li>
+		-->
 		</ul> 
 	  </div>
 		
@@ -51,6 +53,7 @@
 				</label>
 			  </a>				
       </li>
+      <!--
 			<li class="dropdown notifications-menu btn-group">
 				<a href="#" class="waves-effect waves-light btn-primary-light svg-bt-icon bg-transparent" data-bs-toggle="dropdown" title="Notifications">
 					<i data-feather="bell"></i>
@@ -70,7 +73,6 @@
 					</div>
 				  </li>
 				  <li>
-					<!-- inner menu: contains the actual data -->
 					<ul class="menu sm-scrol">
 					  <li>
 						<a href="#">
@@ -114,6 +116,7 @@
 				  </li>
 				</ul>
 			</li>
+		-->
 			
 			<li class="btn-group nav-item d-xl-inline-flex d-none">
 				<a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link btn-primary-light svg-bt-icon" title="Full Screen">
@@ -121,9 +124,14 @@
 			    </a>
 			</li>
 <?php if(isset($_SESSION['usuario=cole'])){ ?> 
+			<li class="btn-group nav-item d-xl-inline-flex d-none">
+				<a href="../controles/code=close.php"  class="waves-effect waves-light nav-link btn-primary-light svg-bt-icon" title="Full Screen">
+					<i data-feather="log-out"></i>
+			    </a>
+			</li>
 			<!-- User Account-->
-			<li class="dropdown user user-menu">
-				<a href="#" class="waves-effect waves-light dropdown-toggle w-auto l-h-12 bg-transparent p-0 no-shadow" title="User" data-bs-toggle="modal" data-bs-target="#quick_user_toggle">
+			<li class="dropdown user user-menu"><!-- data-bs-toggle="modal" data-bs-target="#quick_user_toggle" -->
+				<a href="../userprofile.php?user=<?php echo $info['USUARIO']; ?>" class="waves-effect waves-light dropdown-toggle w-auto l-h-12 bg-transparent p-0 no-shadow" title="User" >
 					<div class="d-flex pt-1 align-items-center">
 						<div class="text-end me-10">
 							<p class="pt-5 fs-14 mb-0 fw-700"><?php echo $info['NOMBRES']; ?></p>
@@ -196,15 +204,16 @@
 				</li>	
 
 			  </ul>
-			  
+			  <!--
 			  <div class="sidebar-widgets">
 				  <div class="mx-25 mb-30 pb-20 side-bx bg-primary-light rounded20">
 					<div class="text-center">
-						<img src="../assets/images/svg-icon/color-svg/custom-24.svg" class="sideimg p-5" alt="">
+						<img src="../perfil/src=img/perfil.gif" class="sideimg p-5" alt="">
 						<h4 class="title-bx text-primary">Virgen de Guadalupe</h4>
 					</div>
 				  </div>
 			  </div>
+				-->
 		  </div>
 		</div>
     </section>

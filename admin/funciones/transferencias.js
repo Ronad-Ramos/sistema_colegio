@@ -1,11 +1,11 @@
 
 //Ejecutar mostar alumnos=>
-mostrarMatricula();
+mostrarTransferencia();
 
 //registro de alumnos =>
-function registrarMatricula(){
+function registrarTransferencia(){
 
-    if($('#dtoNeutral').val() == 1 ){ var urld = "controles/code=matricula.php";}else{ var urld = "admin/controles/code=matricula.php";}
+    if($('#dtoNeutral').val() == 1 ){ var urld = "controles/code=transferencias.php";}else{ var urld = "admin/controles/code=transferencias.php";}
 
 	var file = $('#example-fileinput');
     var file_data = file.prop('files')[0];
@@ -15,25 +15,11 @@ function registrarMatricula(){
     //tipo de accion
     formData.append('tipo'        , "r");
     //datos apoderado
-    formData.append('nombres_apoderado'     , $('#Nombre_apo').val() );
-    formData.append('apellidos_apoderado'   , $('#Apellido_apo').val());
     formData.append('dni_apoderado'         , $('#DNI_apo').val());
-    formData.append('telefono_apoderado'    , $('#Telefono_apo').val());
     formData.append('correo_apoderado'      , $('#Electronico_apo').val()); 
-    formData.append('direccion_apoderado'  , $('#Dirección_apo').val()); 
     //datos de alumno
-    formData.append('nombres_alumno'     , $('#Nombres_alu').val() );
-    formData.append('apellidos_alumno'   , $('#Apellidos_alu').val());
     formData.append('dni_alumno'         , $('#DNI_alu').val());
-    formData.append('telefono_alumno'    , $('#Telefono_alu').val());
-    formData.append('correo_alumno'      , $('#Electronico_alu').val()); 
-    formData.append('direccion_alumno'   , $('#Dirección_alu').val()); 
-    formData.append('fecha_nac_alumno'   , $('#fecha_alu').val());
-    formData.append('genero_alumno'      , $('#genero_alu').val());
-    formData.append('nivel_alumno'       , $('#select_nivel_alu').val());
-    formData.append('grado_alumno'       , $('#select_grado_alu').val());
-    formData.append('seccion_alumno'     , $('#select_seccion_alu').val());
-    //formData.append('grado'  , dataString); 
+    formData.append('correo_alumno'      , $('#Electronico_alu').val());
     
     $.ajax({
         data:  formData,
@@ -56,7 +42,7 @@ function registrarMatricula(){
 
             if(dataObj[0].valor == 1){
 
-                mostrarMatricula();
+                mostrarTransferencia();
                 $('#registrar').removeClass('show');
                 $('#registrar').css('display', 'block');
 
@@ -79,11 +65,11 @@ function registrarMatricula(){
 
 }
 
-function eliminarMatricula(e){
+function eliminarTransferencia(e){
 	var parametros = { "tipo" : "e", "id" : e};
     $.ajax({
         data:  parametros,
-        url:   'controles/code=matricula.php',
+        url:   'controles/code=transferencias.php',
         type:  'post',
         beforeSend: function () {
             $('#btnEliminar'+e).css('display','none');
@@ -91,22 +77,22 @@ function eliminarMatricula(e){
         success:  function (response) { console.log(response);
 
             $('#btnEliminar'+e).css('display', 'block');
-            mostrarMatricula();
+            mostrarTransferencia();
         }
     });
 }
 
-function editarMatricula(u){ 
+function editarTransferencia(u){ 
 
 	var parametros = { "tipo" : "sue", 'user' : u};
     $.ajax({
         data:  parametros,
-        url:   'controles/code=matricula.php',
+        url:   'controles/code=transferencias.php',
         type:  'post',
         beforeSend: function () {
             $('#btnEdit').html('Editando...');
         },
-        success:  function (response) { console.log(response);
+        success:  function (response) { //console.log(response);
 
             $('#btnEdit').html('Editar');
             
@@ -138,7 +124,7 @@ function editarMatricula(u){
 
 }
 
-function editMatricula(){  
+function editTransferencia(){  
      
     var data = {
         'tipo' : "a",
@@ -153,7 +139,7 @@ function editMatricula(){
 
     $.ajax({
         data:  data,
-        url:   'controles/code=matricula.php',
+        url:   'controles/code=transferencias.php',
         type:  'post',
         beforeSend: function () {
            $('#btnEdit').html('Editando...');
@@ -172,7 +158,7 @@ function editMatricula(){
 
 				//$('#enombresUsuario,#eapellidosUsuario,#ecorreoUsuario,#epasswordUsuario,#efechaUsuario').val('') 
 				//image.val('');
-				mostrarMatricula();
+				mostrarTransferencia();
             }else{ $("#msme").html(dataObj[0].mensaje); }
         },
         error: function(error){
@@ -181,17 +167,17 @@ function editMatricula(){
     });
 }
 
-function mostrarMatricula(){
+function mostrarTransferencia(){
 	
 	var parametros = { "tipo" : "m"};
     $.ajax({
         data:  parametros,
-        url:   'controles/code=matricula.php',
+        url:   'controles/code=transferencias.php',
         type:  'post',
         beforeSend: function () {
             $('#tbody').html('<p>Cargando...</p>');
         },
-        success:  function (response) {
+        success:  function (response) { console.log(response);
             
             $('#tbody').html(response);
                     

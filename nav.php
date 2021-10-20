@@ -33,6 +33,11 @@
 				<li>
 					<a href="userprofile.php?user=<?php  echo $_SESSION['usuario=cole'];?>">Perfil</a>
 				</li>
+				<?php if(isset($_SESSION['usuario=cole']) AND $info['ROL'] == 1 ) { ?>
+				<li>
+					<a href="admin/">Admin</a>
+				</li>
+				<?php } ?>	
 				<li>
 					<a href="controles/code=close.php">Cerrar Sesion</a>
 				</li>

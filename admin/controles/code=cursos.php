@@ -32,7 +32,7 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 
 				move_uploaded_file($tmp_dir,$upload_dir.$img);
 
-				$sentencia = $conexion->prepare("INSERT INTO `cursos`(`ID`, `TITULO`, `IMAGEN`, `DESCRIPCION`) VALUES (NULL,?,?,?)");
+				$sentencia = $conexion->prepare("INSERT INTO `curso`(`ID`, `TITULO`, `IMAGEN`, `DESCRIPCION`) VALUES (NULL,?,?,?)");
 			    $resultado = $sentencia->execute([$_POST['titulo'],$img,$_POST['texto']]); 
 
 			    $message = 'Cargado correctamente'; $valor = '1';
@@ -54,8 +54,6 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
         $curs = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
 		$valor = '';
 		foreach($curs as $cursos){
-		
-		if($cursos['IMAGEN']!=""){}else{}
 
 		$valor .='				<div class="media align-items-center">';
 		$valor .='				  <span class="badge badge-dot badge-danger"></span>';
@@ -81,7 +79,7 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 
 	if($_POST['tipo'] == "a"){ $message = '';
 
-		$detallesU = $conexion->prepare("SELECT * FROM cursos WHERE ID =:d");
+		$detallesU = $conexion->prepare("SELECT * FROM curso WHERE ID =:d");
     	$detallesU -> bindParam(':d', $_POST['id'], PDO::PARAM_STR);
     	$detallesU->execute();
 
@@ -121,7 +119,7 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
                             unlink('../../assets/images/courses/'.$rest);
 
                             $photo = $userpic."?user=".$info['ID'];
-                            $sentencia = $conexion->prepare("UPDATE `cursos` SET `IMAGEN`=? WHERE `ID`=?");
+                            $sentencia = $conexion->prepare("UPDATE `curso` SET `IMAGEN`=? WHERE `ID`=?");
                             $resultado = $sentencia->execute([$photo,$info['ID']]);
 
                           	$message .= 'Actualizo su foto de curso exitozamente'; $valor = '0';
@@ -131,18 +129,18 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
                         $message .= 'Solo se permiten archivos JPG, JPEG, PNG y GIF'; $valor = '0'; 
                     }
         }else{
-           $sentencia = $conexion->prepare("UPDATE `cursos` SET `IMAGEN`=? WHERE `ID`=?");
+           $sentencia = $conexion->prepare("UPDATE `curso` SET `IMAGEN`=? WHERE `ID`=?");
            $resultado = $sentencia->execute([$info['IMAGEN'],$info['ID']]); 
            $message .= 'Información actualizada correctamente'; $valor = '1';
         }
 
 		if (isset($_POST['tituloC']) AND $_POST['tituloC'] != "") {
-			$sentencia = $conexion->prepare("UPDATE `cursos` SET `TITULO`=? WHERE `ID`=?");
+			$sentencia = $conexion->prepare("UPDATE `curso` SET `TITULO`=? WHERE `ID`=?");
             $resultado = $sentencia->execute([$_POST['tituloC'],$info['ID']]);
             $message .= 'Información actualizada correctamente'; $valor = '1';
 		}
 		if (isset($_POST['textoC']) AND $_POST['textoC'] != "") {
-			$sentencia = $conexion->prepare("UPDATE `cursos` SET `DESCRIPCION`=? WHERE `ID`=?");
+			$sentencia = $conexion->prepare("UPDATE `curso` SET `DESCRIPCION`=? WHERE `ID`=?");
             $resultado = $sentencia->execute([$_POST['textoC'],$info['ID']]);
             $message .= 'Información actualizada correctamente'; $valor = '1';
 		}
@@ -153,13 +151,13 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 	}
 
 	if($_POST['tipo'] == "e"){
-		$sentencia = $conexion->prepare("DELETE FROM `cursos` WHERE ID = :i");
+		$sentencia = $conexion->prepare("DELETE FROM `curso` WHERE ID = :i");
         $resultado = $sentencia->execute(['i'=>$_POST['id']]);
 	}
 
 	if($_POST['tipo'] == "sue"){
 		
-		$detallesU = $conexion->prepare("SELECT * FROM cursos WHERE ID =:d");
+		$detallesU = $conexion->prepare("SELECT * FROM curso WHERE ID =:d");
     	$detallesU -> bindParam(':d', $_POST['curso'], PDO::PARAM_STR);
     	$detallesU->execute();
 

@@ -180,26 +180,63 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
 		echo $valor;
 	}
 
-	if($_POST['tipo'] == "a"){ $message = '';
+	if($_POST['tipo'] == "a"){ $message = ''; $valor = '0';
 
 		$detallesU = $conexion->prepare("SELECT * FROM matriculas WHERE ID =:d");
-    	$detallesU -> bindParam(':d', $_POST['id'], PDO::PARAM_STR);
+    	$detallesU -> bindParam(':d', $_POST['idd']);
     	$detallesU->execute();
 
-    	$info = $detallesU->fetch(PDO::FETCH_ASSOC);
+    	$matricula = $detallesU->fetch(PDO::FETCH_ASSOC);
 
-		
-		if (isset($_POST['nombres']) AND $_POST['nombres'] != "") {
+		//Apoderado
+		if (isset($_POST['nombres_apoderado_ac']) AND $_POST['nombres_apoderado_ac'] != "") {
+
 			$sentencia = $conexion->prepare("UPDATE `usuarios` SET `NOMBRES`=? WHERE `ID`=?");
-            $resultado = $sentencia->execute([$_POST['nombres'],$info['ID']]);
+            $resultado = $sentencia->execute([$_POST['nombres_apoderado_ac'],$matricula['ID_APODERADO']]);
             $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
 		}
-		if (isset($_POST['apellidos']) AND $_POST['apellidos'] != "") {
+
+		if (isset($_POST['apellidos_apoderado_ac']) AND $_POST['apellidos_apoderado_ac'] != "") {
+
 			$sentencia = $conexion->prepare("UPDATE `usuarios` SET `APELLIDOS`=? WHERE `ID`=?");
-            $resultado = $sentencia->execute([$_POST['apellidos'],$info['ID']]);
+            $resultado = $sentencia->execute([$_POST['apellidos_apoderado_ac'],$matricula['ID_APODERADO']]);
             $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
 		}
-		
+		//alumno
+		if (isset($_POST['nombres_alumno_ac']) AND $_POST['nombres_alumno_ac'] != "") {
+
+			$sentencia = $conexion->prepare("UPDATE `usuarios` SET `NOMBRES`=? WHERE `ID`=?");
+            $resultado = $sentencia->execute([$_POST['nombres_alumno_ac'],$matricula['ID_ALUMNO']]);
+            $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
+		}
+
+		if (isset($_POST['apellidos_alumno_ac']) AND $_POST['apellidos_alumno_ac'] != "") {
+
+			$sentencia = $conexion->prepare("UPDATE `usuarios` SET `APELLIDOS`=? WHERE `ID`=?");
+            $resultado = $sentencia->execute([$_POST['apellidos_alumno_ac'],$matricula['ID_ALUMNO']]);
+            $message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
+		}
+
+		if($_POST["nivel_alumno_ac"] != "" AND $_POST["grado_alumno_ac"] !="" AND $_POST["seccion_alumno_ac"] !=""){
+
+		    if($_POST["nivel_alumno_ac"]==1){$n="primaria";}else{$n="secundaria";}
+
+				$detallesUs = $conexion->prepare("SELECT * FROM grado");
+				$detallesUs->execute();
+				$g = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
+
+				foreach($g as $gradx){
+
+					if($gradx['NIVEL']==$n AND $gradx['GRADO']==$_POST["grado_alumno_ac"] AND $gradx['SECCION']==$_POST["seccion_alumno_ac"] AND $gradx['TOTAL_MAX'] <= 15){
+						$idG = $gradx['ID']; 
+					}
+				}
+
+				$sentencia = $conexion->prepare("UPDATE `usuarios` SET `ID_GRADO`=? WHERE `ID`=?");
+            	$resultado = $sentencia->execute([$idG,$matricula['ID_ALUMNO']]);
+           		$message .= '<p>Información actualizada correctamente</p>'; $valor = '1';
+
+		}
 
 		$return_arr[] = array("mensaje" => $message, "valor" => $valor);
         echo json_encode($return_arr);
@@ -235,18 +272,24 @@ if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "" && $_FILES['
     	$matricula = $detallesU->fetch(PDO::FETCH_ASSOC);
 
     	$detallesApod = $conexion->prepare("SELECT * FROM usuarios WHERE ID =:d");
-    	$detallesApod -> bindParam(':d', $matricula['ID_ALUMNO'], PDO::PARAM_STR);
+    	$detallesApod -> bindParam(':d', $matricula['ID_APODERADO'], PDO::PARAM_STR);
     	$detallesApod->execute();
     	$infoApoderado = $detallesApod->fetch(PDO::FETCH_ASSOC);
 
 
     	$detallesAlum = $conexion->prepare("SELECT * FROM usuarios WHERE ID =:d");
-    	$detallesAlum -> bindParam(':d', $matricula['ID_APODERADO'], PDO::PARAM_STR);
+    	$detallesAlum -> bindParam(':d', $matricula['ID_ALUMNO'], PDO::PARAM_STR);
     	$detallesAlum->execute();
     	$infoAlumno = $detallesAlum->fetch(PDO::FETCH_ASSOC);
 
+    	
+    	$detallesGrado = $conexion->prepare("SELECT * FROM grado WHERE ID =:g");
+    	$detallesGrado -> bindParam(':g', $infoAlumno['ID_GRADO'], PDO::PARAM_STR);
+    	$detallesGrado->execute();
+    	$infoGrado = $detallesGrado->fetch(PDO::FETCH_ASSOC);
 
-    	$return_arr[] = array("infoApoderado" => $infoApoderado , "infoAlumno" => $infoAlumno, "idMatri" => $matricula['ID']);
+
+    	$return_arr[] = array("infoApoderado" => $infoApoderado , "infoAlumno" => $infoAlumno, "idMatri" => $matricula['ID'], "grado" => $infoGrado);
         echo json_encode($return_arr);
 	}
 	

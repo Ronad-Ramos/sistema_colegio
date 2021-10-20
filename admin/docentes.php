@@ -1,3 +1,22 @@
+<?php  session_start(); 
+
+include "controles/code=conexion.php";
+
+if (isset($_SESSION['usuario=cole'])) {
+	
+    $detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE USUARIO=:user");
+    $detallesU -> bindParam(':user', $_SESSION["usuario=cole"], PDO::PARAM_STR);
+    $detallesU->execute();
+
+    $info = $detallesU->fetch(PDO::FETCH_ASSOC);
+
+    if($info['ROL'] != 1 ){ header("location: ../"); }
+
+}else{
+	header("location: ../auth.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -202,7 +221,6 @@
   </div>
   <!-- /.content-wrapper -->
 	<?php include 'controles/vista=footer.php'; ?>
-	<?php include 'controles/vista=post_footer.php'; ?>
 </div>
 	<!-- Page Content overlay -->
 	<script type="text/javascript" src="funciones/docentes.js"></script>

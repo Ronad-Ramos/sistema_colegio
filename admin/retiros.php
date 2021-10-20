@@ -108,7 +108,7 @@ if (isset($_SESSION['usuario=cole'])) {
 							<div class="modal-body">
 								<div class="text-center mt-2 mb-4">
 									<a class="text-success">
-										<span>Registrar nueva matricula</span>
+										<span>Registrar nuevo retiro</span>
 										<input type="hidden" id="dtoNeutral" value="1">
 									</a>
 								</div>
@@ -117,166 +117,37 @@ if (isset($_SESSION['usuario=cole'])) {
 						  <div class="col-md-6">
 							<div class="form-group">
 							<label for="example-fileinput" class="form-label">Apoderado</label>
-							  <input type="text" class="form-control" id="Nombre_apo" placeholder="Nombre del apoderado" required>
+							  <input type="email" class="form-control" placeholder="Correo electronico" required id="Electronico_apo">
 							</div>
 						  </div>
 						  <div class="col-md-6">
 							<div class="form-group">
 								<label for="example-fileinput" class="form-label"><br></label>
-							  <input type="text" class="form-control" id="Apellido_apo"  placeholder="Apellido del apoderado" required>
+							  <input type="number" class="form-control" placeholder="DNI" required id="DNI_apo">
+							</div>
+						  </div>
+
+						  <div class="col-md-6">
+							<div class="form-group">
+								<label for="example-fileinput" class="form-label">Alumno</label>
+							  <input type="email" class="form-control" placeholder="Correo electronico" id="Electronico_alu">
 							</div>
 						  </div>
 						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="text" class="form-control" id="DNI_apo" placeholder="DNI del apoderado"  required>
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="tel" class="form-control" id="Telefono_apo"  placeholder="Telefono del apoderado" required>
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="text" class="form-control" id="Electronico_apo"  placeholder="Correo electronico del apoderado" required>
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="tel" class="form-control" id="Dirección_apo" placeholder="Direción del apoderado"  required>
-								</div>
-						  </div>
-
-						  <div class="col-md-6">
-								<div class="form-group">
-									<label for="example-fileinput" class="form-label">Alumno</label>
-								  <input type="text" class="form-control" id="Nombres_alu" placeholder="Nombres del alumno">
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-									<label for="example-fileinput" class="form-label"><br></label>
-								  <input type="text" class="form-control" id="Apellidos_alu" placeholder="Apellidos del alumno">
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="text" class="form-control" id="DNI_alu" placeholder="DNI del alumno" required>
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="tel" class="form-control" id="Telefono_alu" placeholder="Telefono del alumno" required>
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="text" class="form-control" placeholder="Correo" id="Electronico_alu" required>
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-group">
-								  <input type="tel" class="form-control" id="Dirección_alu" placeholder="Dirección" required>
-								</div>
-						  </div>
-						  
-						  <div class="col-md-6">
-								<div class="form-group">
-									<label for="example-fileinput" class="form-label">Fecha de nacimiento del alumno</label>
-								  <input type="date" class="form-control" value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>"placeholder="Fecha de nacimiento" id="fecha_alu">
-								</div>
-						  </div>
-						  <div class="col-md-6">
-								<div class="form-label"><label>Genero</label>
-										<select class="form-select" name="genero" id="genero_alu"> 
-											<option value="1">Masculino</option>
-											<option value="2">Femenino</option>
-										</select> 
-								</div>
-						  </div>
-
-						<form id="f1" name="f1">
-						  <div class="col-md-6">
-							  <div class="form-group">
-									<label class="form-label">Selecionar Nivel-Grado-Seccion</label>
-									<select class="form-select" name="nivel" onchange="cambia_provincia()" id="select_nivel_alu"> 
-										<option value="0" selected>Seleccione Nivel </option>
-										<option value="1">Primaria</option> 
-										<option value="2">Secundaria</option>
-									</select>
-							   </div>
+							<div class="form-group">
+								<label for="example-fileinput" class="form-label"><br></label>
+							  <input type="number" class="form-control" placeholder="DNI" id="DNI_alu">
 							</div>
-
-							<div class="col-md-6">
-							  <div class="form-group">
-							  	<label class="form-label">    </label>
-									<select class="form-select" name=grado id="select_grado_alu"> 
-										<option value="-">-</option>
-								  </select> 
-								</div>
-							</div>
-						</form>
-
-									<div class="col-md-6">
-							  		<div class="form-group">
-											<select class="form-select" name=seccion id="select_seccion_alu"> 
-													<option value="-" selected>Seleccione Seccion 
-							 						<option value="A">A</option>
-													<option value="B">B</option>
-													<option value="C">C</option>
-													<option value="D">D</option>
-													<option value="E">E</option>
-											</select> 
-										</div>
-								  </div>	
-
-<script type="text/javascript">
-	var nivel_prim=new Array("Selecione grado","1","2","3","4","5","6");
-  var nivel_secu=new Array("Selecione grado","1","2","3","4","5");
-
-  var todos_nivel = [
-    [],
-    nivel_prim,
-    nivel_secu,
-  ];
-
-  function cambia_provincia(){ 
-   	//tomo el valor del select del nivel elegido 
-   	var nivel 
-   	nivel = document.f1.nivel[document.f1.nivel.selectedIndex].value 
-   	//miro a ver si el nivel está definido 
-   	if (nivel != 0) { 
-      	//si estaba definido, entonces coloco las opciones de la grado correspondiente. 
-      	//selecciono el array de grado adecuado 
-      	mis_grados=todos_nivel[nivel]
-      	//calculo el numero de grados 
-      	num_grados = mis_grados.length 
-      	//marco el número de grados en el select 
-      	document.f1.grado.length = num_grados 
-      	//para cada grado del array, la introduzco en el select 
-      	for(i=0;i<num_grados;i++){ 
-         	document.f1.grado.options[i].value=mis_grados[i] 
-         	document.f1.grado.options[i].text=mis_grados[i]
-      	}	
-   	}else{ 
-      	//si no había grado seleccionada, elimino las grados del select 
-      	document.f1.grado.length = 1 
-      	//coloco un guión en la única opción que he dejado 
-      	document.f1.grado.options[0].value = "-" 
-      	document.f1.grado.options[0].text = "-" 
-   	} console.log(nivel);
-   	//marco como seleccionada la opción primera de grado 
-   	document.f1.grado.options[0].selected = true 
-}
-</script>
+						  </div>
 
 							 <div class="mb-3">
 								<label for="example-fileinput" class="form-label">Solicitud</label>
 								<input type="file" id="example-fileinput" class="form-control" >
 							</div>
 						  <div class="col-lg-12">
-							  <button  type="button" class="btn btn-primary" id="buttonEnviar" onclick="registrarMatricula();">Enviar</button>
+							  <button  type="button" id="buttonEnviar" class="btn btn-primary" onclick="registrarRetiro();">Enviar</button>
 						  </div>
+						  <p id="msg"></p>
 						</div>
 
 								<p id="msg" ></p>
@@ -361,7 +232,7 @@ if (isset($_SESSION['usuario=cole'])) {
 								<div class="mb-3 text-center">
 									<button class="btn btn-primary" type="submit" id="btnEditc" onclick="$('#editar').removeClass('show');
 			$('#editar').css('display', 'none');" >Cancelar</button>
-									<button class="btn btn-primary" type="submit" id="btnEdit" onclick="editMatricula();" >Editar</button>
+									<button class="btn btn-primary" type="submit" id="btnEdit" onclick="editRetiro();" >Editar</button>
 								</div>
 								<p id="msme" ></p>
 								
@@ -380,7 +251,7 @@ if (isset($_SESSION['usuario=cole'])) {
 	<?php include 'controles/vista=footer.php'; ?>
 </div>
 	<!-- Page Content overlay -->
-	<script type="text/javascript" src="funciones/matricula.js"></script>
+	<script type="text/javascript" src="funciones/retiros.js"></script>
 	<!-- Vendor JS -->
 	<script src="src/js/vendors.min.js"></script>
 	<script src="src/js/pages/chat-popup.js"></script>

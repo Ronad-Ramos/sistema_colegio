@@ -13,7 +13,7 @@ if (isset($_SESSION['usuario=cole'])) {
     if($info['ROL'] == 1 ){ header("location: admin/"); }
 }
 
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">

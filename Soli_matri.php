@@ -1,11 +1,18 @@
-<?php
-session_start();
+<?php  session_start(); 
 
-if(!isset($_SESSION['usuario=cole'])) {
-	header("location: auth.php");
-}
+include "controles/code=conexion.php";
 
-?>
+if (isset($_SESSION['usuario=cole'])) {
+	
+    $detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE USUARIO=:user");
+    $detallesU -> bindParam(':user', $_SESSION["usuario=cole"], PDO::PARAM_STR);
+    $detallesU->execute();
+
+    $info = $detallesU->fetch(PDO::FETCH_ASSOC);
+
+}else{header("location: auth.php");}
+
+?> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +55,8 @@ if(!isset($_SESSION['usuario=cole'])) {
 						    border-radius: 6px;
 						    position: relative;
 						    overflow: hidden;"></hr>
-							<p id="msg" >It is a long established fact that a reader will be distracted by the readable content of a page</p>
+							<p>Envianos tu solicitud mediante el formato => <a href="">Descargar</a> </p>
+							<input type="hidden" id="dtoNeutral" value="2">
 						</div>
 						<div class="row">
 						  <div class="col-md-6">

@@ -10,7 +10,10 @@ if (isset($_SESSION['usuario=cole'])) {
 
     $info = $detallesU->fetch(PDO::FETCH_ASSOC);
 
-    if($info['ROL'] != 1 ){ header("location: admin/"); }
+    if($info['ROL'] != 1 ){ header("location: ../"); }
+
+}else{
+	header("location: ../auth.php");
 }
 
 ?>
@@ -242,7 +245,6 @@ if (isset($_SESSION['usuario=cole'])) {
   </div>
   <!-- /.content-wrapper -->
 	<?php include 'controles/vista=footer.php'; ?>
-	<?php include 'controles/vista=post_footer.php'; ?>
   <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>	
 	

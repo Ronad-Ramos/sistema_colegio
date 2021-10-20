@@ -68,14 +68,14 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
 
 				move_uploaded_file($tmp_dir,$upload_dir.$img);
 
-				$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `GENERO`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`, `FOTO_PERFIL`,`GRADO`) VALUES (NULL,?,?,?,?,?,?,?,?,NOW(),?,?,?)");
-			    $resultado = $sentencia->execute([$codigo,"3",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$genero[1],$_POST['nacimiento'],$img],$idG); 
+				$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `GENERO`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`, `FOTO_PERFIL`,`ID_GRADO`) VALUES (NULL,?,?,?,?,?,?,?,NOW(),?,?,?)");
+			    $resultado = $sentencia->execute(["3",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$genero[1],$_POST['nacimiento'],$img,$idG]); 
 
 			    $message = 'Cargado correctamente'; $valor = '1';
 
 			}else{ $message = 'Solo se permiten jpg - png - jpeg.'; $valor = '0'; }
 		}else{ 
-			$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `GENERO`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`,`GRADO`) VALUES (NULL,?,?,?,?,?,?,?,NOW(),?,?)");
+			$sentencia = $conexion->prepare("INSERT INTO `usuarios`(`ID`, `ROL`, `NOMBRES`, `APELLIDOS`, `CORREO`, `USUARIO`, `PASSWORD`, `GENERO`, `FECHA_REGISTRO`, `FECHA_NACIMIENTO`,`ID_GRADO`) VALUES (NULL,?,?,?,?,?,?,?,NOW(),?,?)");
 			$resultado = $sentencia->execute(["3",$_POST['nombres'],$_POST['apellidos'],$_POST['correo'],$user,$_POST['password'],$genero[1],$_POST['nacimiento'],$idG]); 
 
 			$message = 'Cargado correctamente'; $valor = '1';
@@ -101,8 +101,9 @@ if(isset($_POST['tipo']) AND $_POST['tipo'] != "" ){
         $userE = $detallesUs->fetchAll(PDO::FETCH_ASSOC);
 		$valor = '';
 		foreach($userE as $usuario){
+
 			$detallesUs = $conexion->prepare("SELECT * FROM grado WHERE ID = :d");
-			$detallesUs -> bindParam(':d', $usuario['GRADO'],); 
+			$detallesUs -> bindParam(':d', $usuario['ID_GRADO']); 
 			$detallesUs->execute();
 			$grd = $detallesUs->fetch(PDO::FETCH_ASSOC);
 

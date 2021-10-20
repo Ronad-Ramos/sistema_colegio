@@ -1,4 +1,18 @@
-﻿<?php  session_start(); ?>
+﻿<?php  session_start(); 
+
+include "controles/code=conexion.php";
+
+if (isset($_SESSION['usuario=cole'])) {
+    
+    $detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE USUARIO=:user");
+    $detallesU -> bindParam(':user', $_SESSION["usuario=cole"], PDO::PARAM_STR);
+    $detallesU->execute();
+
+    $info = $detallesU->fetch(PDO::FETCH_ASSOC);
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -80,7 +94,7 @@ include "nav.php";
 							</div>
 						  <div class="text-center">
 							<h3 class="my-10"><a href="userprofile.php?user=<?php echo $doc['USUARIO']; ?>"><?php echo $doc['NOMBRES']." ".$doc['APELLIDOS']; ?></a></h3>
-							<h6 class="user-info mt-0 mb-10 text-fade"><?php echo $doc['NRO_TELEFONO']; ?></h6>
+							<h6 class="user-info mt-0 mb-10 text-fade"><?php echo $doc['NRO_TELEFONICO']; ?></h6>
 							<p class="text-fade w-p85 mx-auto"><?php echo $doc['CORREO']; ?></p>
 						  </div>
 					  </div>

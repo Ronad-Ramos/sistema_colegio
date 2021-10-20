@@ -42,14 +42,14 @@ function registrarUser(){
         beforeSend: function () {
            $('#btnRegistrar').css('display', 'none');
         },
-        success:  function (response) {
+        success:  function (response) { console.log(response);
 
         	$('#btnRegistrar').css('display', 'block');
 
         	var dataObj = JSON.parse(response);
             $("#msm").html(dataObj[0].mensaje);
 
-            if(dataObj[0].valor = 1){
+            if(dataObj[0].valor == 1){
             	mostrarUsuarios();
 				$('#registrar').removeClass('show');
 				$('#registrar').css('display', 'block');

@@ -1,4 +1,18 @@
-<?php  session_start(); ?>
+<?php  session_start(); 
+
+include "controles/code=conexion.php";
+
+if (isset($_SESSION['usuario=cole'])) {
+	
+    $detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE USUARIO=:user");
+    $detallesU -> bindParam(':user', $_SESSION["usuario=cole"], PDO::PARAM_STR);
+    $detallesU->execute();
+
+    $info = $detallesU->fetch(PDO::FETCH_ASSOC);
+
+}else{header("location: auth.php");}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +32,7 @@
 	<link rel="stylesheet" href="assets/css/skin_color.css">
 </head>
 <body class="theme-primary">
-
+ 
 	<?php include "nav.php"?>
     
     <section class="bg-img pt-500 pb-120" data-overlay="1" style="background-image: url(assets/images/descuento.jpg);">
@@ -34,11 +48,10 @@
 			</div>
 				<div class="col-md-7 col-12">
 					<!--action="insertar.php"-->
-					<form name="f1" id="f1" class="contact-form"  method="POST" enctype="multipart/form-data">
+					<form  class="contact-form">
 						<div class="text-start mb-30">
 							<h2>Llena tus Datos</h2>
 							<hr style="
-						    
 						    padding: 1px;
 						    padding-bottom: 5px;
 						    box-shadow: -5px 0 10px -15px black;
@@ -46,149 +59,44 @@
 						    border-radius: 6px;
 						    position: relative;
 						    overflow: hidden;"></hr>
-							<p>It is a long established fact that a reader will be distracted by the readable content of a page</p>
+							<p>Envianos tu solicitud mediante el formato => <a href="">Descargar</a> </p>
+							<input type="hidden" id="dtoNeutral" value="2">
 						</div>
 						<div class="row">
 						  <div class="col-md-6">
 							<div class="form-group">
 							<label for="example-fileinput" class="form-label">Apoderado</label>
-							  <input type="text" class="form-control" placeholder="Nombre" required>
+							  <input type="email" class="form-control" placeholder="Correo electronico" required id="Electronico_apo">
 							</div>
 						  </div>
 						  <div class="col-md-6">
 							<div class="form-group">
 								<label for="example-fileinput" class="form-label"><br></label>
-							  <input type="text" class="form-control" placeholder="Apellido" required>
-							</div>
-						  </div>
-						  <div class="col-md-6">
-							<div class="form-group">
-							  <input type="text" class="form-control" placeholder="DNI" required>
-							</div>
-						  </div>
-						  <div class="col-md-6">
-							<div class="form-group">
-							  <input type="tel" class="form-control" placeholder="Telefono" required>
+							  <input type="number" class="form-control" placeholder="DNI" required id="DNI_apo">
 							</div>
 						  </div>
 
 						  <div class="col-md-6">
 							<div class="form-group">
 								<label for="example-fileinput" class="form-label">Alumno</label>
-							  <input type="text" class="form-control" placeholder="Nombres">
+							  <input type="email" class="form-control" placeholder="Correo electronico" id="Electronico_alu">
 							</div>
 						  </div>
 						  <div class="col-md-6">
 							<div class="form-group">
 								<label for="example-fileinput" class="form-label"><br></label>
-							  <input type="text" class="form-control" placeholder="Apellidos">
+							  <input type="number" class="form-control" placeholder="DNI" id="DNI_alu">
 							</div>
 						  </div>
-						   <div class="col-md-6">
-							<div class="form-group">
-								<label for="example-fileinput" class="form-label">Fecha de nacimiento</label>
-							  <input type="date" class="form-control" placeholder="Fecha de nacimiento">
-							</div>
-						  </div>
-						  <div class="col-md-6">
-							<div class="form-group">
-								<label for="example-fileinput" class="form-label"><br></label>
-
-							  <input type="text" class="form-control" placeholder="DNI">
-							</div>
-						  </div>
-						 
-
-						  <div class="col-md-6">
-							  <div class="form-group">
-									<label class="form-label">Selecionar Nivel-Grado-Seccion</label>
-									<select class="form-select" name="nivel" onchange="cambia_provincia()"> 
-										<option value="0" selected>Seleccione Nivel </option>
-										<option value="1">Primaria</option> 
-										<option value="2">Secundaria</option>
-									</select>
-							   </div>
-						</div>
-								<div class="col-md-6">
-							  		<div class="form-group">
-							  		<label class="form-label">  </label>
-									<select class="form-select" name=grado> 
-									<option value="-">-</option>
-								    </select> 
-									</div>
-								</div>
-									<div class="col-md-6">
-							  		<div class="form-group">
-										<select class="form-select" name=seccion> 
-												<option value="-" selected>Seleccione Seccion 
-						 						<option value="A">A</option>
-												<option value="B">B</option>
-												<option value="C">C</option>
-												<option value="D">D</option>
-												<option value="E">E</option>
-										</select> 
-									</div>
-								   </div>	
-
-								   <div class="form-label">Genero</label>
-										<select class="form-select" name=genero> 
-												<option value="1">Masculino</option>
-												<option value="2">Femenino</option>
-										</select> 
-								  </div>
-											  
-
-<script type="text/javascript">
-	var nivel_prim=new Array("Selecione grado","1","2","3","4","5","6");
-  var nivel_secu=new Array("Selecione grado","1","2","3","4","5");
-  var sesiones=new Array("Selecione seccion","A","B","C","D","E","F","G","H");
-
-  var todos_nivel = [
-    [],
-    nivel_prim,
-    nivel_secu,
-    sesiones,
-  ];
-
-  function cambia_provincia(){ 
-   	//tomo el valor del select del nivel elegido 
-   	var nivel 
-   	nivel = document.f1.nivel[document.f1.nivel.selectedIndex].value 
-   	//miro a ver si el nivel está definido 
-   	if (nivel != 0) { 
-      	//si estaba definido, entonces coloco las opciones de la grado correspondiente. 
-      	//selecciono el array de grado adecuado 
-      	mis_grados=todos_nivel[nivel]
-      	//calculo el numero de grados 
-      	num_grados = mis_grados.length 
-      	//marco el número de grados en el select 
-      	document.f1.grado.length = num_grados 
-      	//para cada grado del array, la introduzco en el select 
-      	for(i=0;i<num_grados;i++){ 
-         	document.f1.grado.options[i].value=mis_grados[i] 
-         	document.f1.grado.options[i].text=mis_grados[i]
-      	}	
-   	}else{ 
-      	//si no había grado seleccionada, elimino las grados del select 
-      	document.f1.grado.length = 1 
-      	//coloco un guión en la única opción que he dejado 
-      	document.f1.grado.options[0].value = "-" 
-      	document.f1.grado.options[0].text = "-" 
-   	} console.log(nivel);
-   	//marco como seleccionada la opción primera de grado 
-   	document.f1.grado.options[0].selected = true 
-}
-</script>
-
-						
 
 							 <div class="mb-3">
 								<label for="example-fileinput" class="form-label">Solicitud</label>
-								<input type="file" id="example-fileinput" class="form-control">
+								<input type="file" id="example-fileinput" class="form-control" >
 							</div>
 						  <div class="col-lg-12">
-							  <button name="submit" type="submit" value="Submit" class="btn btn-primary">Enviar</button>
+							  <button  type="button" id="buttonEnviar" class="btn btn-primary" onclick="registrarRetiro();">Enviar</button>
 						  </div>
+						  <p id="msg"></p>
 						</div>
 					</form>
 				</div>
@@ -209,5 +117,9 @@
 	
 	<!-- EduLearn front end -->
 	<script src="assets/js/template.js"></script>
+
+	<script src="admin/funciones/retiros.js"></script>
+
+
 	</body>
 	</html>

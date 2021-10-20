@@ -1,4 +1,18 @@
-<?php  session_start(); ?>
+<?php  session_start(); 
+
+include "controles/code=conexion.php";
+
+if (isset($_SESSION['usuario=cole'])) {
+    
+    $detallesU = $conexion->prepare("SELECT * FROM usuarios WHERE USUARIO=:user");
+    $detallesU -> bindParam(':user', $_SESSION["usuario=cole"], PDO::PARAM_STR);
+    $detallesU->execute();
+
+    $info = $detallesU->fetch(PDO::FETCH_ASSOC);
+
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
